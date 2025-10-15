@@ -16,6 +16,8 @@ public class MainActivity extends AppCompatActivity {
 
     public MainActivity() {
         Log.d(MainActivityTag, "MainActivity constructor");
+
+        registerActivityLifecycleCallbacks(new MyApp());
     }
 
     @Override
