@@ -1,9 +1,16 @@
 package ro.ase.ie.g1097_s03;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 
 import androidx.activity.EdgeToEdge;
+import androidx.activity.result.ActivityResult;
+import androidx.activity.result.ActivityResultCallback;
+import androidx.activity.result.ActivityResultCallerLauncher;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
@@ -13,12 +20,24 @@ import androidx.core.view.WindowInsetsCompat;
 public class MainActivity extends AppCompatActivity {
 
     private final String MainActivityTag=getClass().getName().toLowerCase();
+    private ActivityResultLauncher<Intent> launcher;
 
     public MainActivity() {
         Log.i(MainActivityTag, "MainActivity constructor.");
 
         registerActivityLifecycleCallbacks(new MyApp());
     }
+
+    public void btnClick(View view)
+    {
+        Intent intent = new Intent(MainActivity.this, SecondActivity.class);
+        Bundle bundle = new Bundle();
+        bundle.putString("key1", "Hello from MainActivity!");
+        intent.putExtras(bundle);
+
+        launcher.launch(intent);
+    }
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,6 +50,14 @@ public class MainActivity extends AppCompatActivity {
             return insets;
         });
         Log.i(MainActivityTag, "onCreate");
+
+        launcher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(),
+                new ActivityResultCallback<ActivityResult>() {
+                    @Override
+                    public void onActivityResult(ActivityResult o) {
+
+                    }
+                });
     }
 
     @Override
