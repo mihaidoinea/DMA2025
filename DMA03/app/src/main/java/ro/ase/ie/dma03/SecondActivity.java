@@ -1,6 +1,9 @@
 package ro.ase.ie.dma03;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.View;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -9,6 +12,17 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 public class SecondActivity extends AppCompatActivity {
+
+    private final String SecondActivitTag = getClass().getName().toLowerCase();
+
+
+    public void btnResponseClick(View view)
+    {
+        Intent intent = new Intent();
+        intent.putExtra("response", "Hello back from SecondActivity!");
+        setResult(RESULT_OK, intent);
+        finish();
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -20,5 +34,9 @@ public class SecondActivity extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+
+        Intent intent = getIntent();
+        String key1 = intent.getStringExtra("key1");
+        Log.d(SecondActivitTag, key1);
     }
 }

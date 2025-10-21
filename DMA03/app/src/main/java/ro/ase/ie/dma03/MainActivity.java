@@ -13,6 +13,7 @@ import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
@@ -20,12 +21,34 @@ import androidx.core.view.WindowInsetsCompat;
 
 public class MainActivity extends AppCompatActivity {
 
+    private static final int SECOND_ACTIVITY_REQUEST_CODE = 100;
     ActivityResultLauncher<Intent> launcher;
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(resultCode == RESULT_OK)
+        {
+            String response = data.getStringExtra("response");
+            Log.d("MainActivity", response);
+        }
+        else if(resultCode == RESULT_CANCELED)
+        {
+            Log.d("MainActivity", "Second Activity was cancelled!");
+        }
+
+    }
 
     public void btnClick(View view)
     {
         Intent intent = new Intent(MainActivity.this, SecondActivity.class);
-        startActivity(intent);
+        Bundle bundle = new Bundle();
+        bundle.putString("key1", "Hello from MainActivity!");
+        intent.putExtras(bundle);
+//        intent.putExtra("key1", "Hello from MainActivity!");
+//        startActivity(intent);
+//        startActivityForResult(intent, SECOND_ACTIVITY_REQUEST_CODE);
+        launcher.launch(intent);
     }
 
     public MainActivity() {
@@ -46,6 +69,19 @@ public class MainActivity extends AppCompatActivity {
             return insets;
 
         });
+
+        launcher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(),
+                new ActivityResultCallback<ActivityResult>() {
+                    @Override
+                    public void onActivityResult(ActivityResult o) {
+                        if(o.getResultCode() == RESULT_OK)
+                        {
+                            Intent data = o.getData();
+                            if(data != null)
+                                Log.i("MainActivity", data.getStringExtra("response"));
+                        }
+                    }
+                });
 
         Log.d("MainActivity","onCreate");
 
