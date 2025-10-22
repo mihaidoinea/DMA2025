@@ -15,14 +15,14 @@
 
         <TextView
             android:id="@+id/tvTitle"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
+            android:layout_weight="3"
             android:text="TextView" />
 
         <EditText
             android:id="@+id/etTitle"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:ems="10"
@@ -37,14 +37,14 @@
 
         <TextView
             android:id="@+id/tvRelease"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
+            android:layout_weight="3"
             android:text="TextView" />
 
         <EditText
             android:id="@+id/etRelease"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:ems="10"
@@ -58,14 +58,14 @@
 
         <TextView
             android:id="@+id/textView3"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
+            android:layout_weight="3"
             android:text="TextView" />
 
         <EditText
             android:id="@+id/editTextNumberDecimal"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:ems="10"
@@ -79,15 +79,16 @@
 
         <TextView
             android:id="@+id/textView4"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
+            android:layout_weight="3"
             android:text="TextView" />
 
         <RatingBar
             android:id="@+id/ratingBar"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:numStars="5"
             android:layout_weight="1" />
     </LinearLayout>
 
@@ -98,14 +99,14 @@
 
         <TextView
             android:id="@+id/textView5"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
+            android:layout_weight="3"
             android:text="TextView" />
 
         <SeekBar
             android:id="@+id/seekBar"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1" />
     </LinearLayout>
@@ -117,9 +118,9 @@
 
         <TextView
             android:id="@+id/textView6"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
+            android:layout_weight="3"
             android:text="TextView" />
 
         <Spinner
@@ -137,50 +138,51 @@
 
         <TextView
             android:id="@+id/textView7"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
+            android:layout_weight="3"
             android:text="TextView" />
 
         <RadioGroup
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_weight="1" >
+            android:layout_weight="1"
+            android:orientation="horizontal">
 
             <RadioButton
-                android:id="@+id/radioButton"
+                android:id="@+id/rbG"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="RadioButton" />
+                android:text="G" />
 
             <RadioButton
-                android:id="@+id/radioButton2"
-                android:layout_width="match_parent"
+                android:id="@+id/rbPG"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="RadioButton" />
+                android:text="PG" />
 
             <RadioButton
-                android:id="@+id/radioButton3"
-                android:layout_width="match_parent"
+                android:id="@+id/rbPG13"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="RadioButton" />
+                android:text="PG13" />
 
             <RadioButton
-                android:id="@+id/radioButton4"
-                android:layout_width="match_parent"
+                android:id="@+id/rbR"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="RadioButton" />
+                android:text="R" />
 
             <RadioButton
-                android:id="@+id/radioButton5"
-                android:layout_width="match_parent"
+                android:id="@+id/rbNC17"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="RadioButton" />
+                android:text="NC17" />
         </RadioGroup>
     </LinearLayout>
 
@@ -191,14 +193,14 @@
 
         <TextView
             android:id="@+id/textView8"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
+            android:layout_weight="3"
             android:text="TextView" />
 
         <Switch
             android:id="@+id/switch1"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="Switch" />
@@ -212,14 +214,14 @@
 
         <TextView
             android:id="@+id/textView9"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
+            android:layout_weight="3"
             android:text="TextView" />
 
         <EditText
             android:id="@+id/editTextText2"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:ems="10"
