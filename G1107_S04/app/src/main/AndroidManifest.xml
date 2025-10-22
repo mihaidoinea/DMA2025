@@ -12,6 +12,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.G1107_S04">
         <activity
+            android:name=".MovieActivity"
+            android:exported="false" />
+        <activity
             android:name=".MainActivity"
             android:exported="true">
             <intent-filter>
