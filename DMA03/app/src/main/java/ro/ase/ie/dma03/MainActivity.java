@@ -2,8 +2,10 @@ package ro.ase.ie.dma03;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
 
@@ -48,7 +50,17 @@ public class MainActivity extends AppCompatActivity {
 //        intent.putExtra("key1", "Hello from MainActivity!");
 //        startActivity(intent);
 //        startActivityForResult(intent, SECOND_ACTIVITY_REQUEST_CODE);
-        launcher.launch(intent);
+//        launcher.launch(intent);
+
+        Intent callIntent = new Intent(Intent.ACTION_SEND);
+        callIntent.putExtra(Intent.EXTRA_TEXT,"Hello from an Android app");
+        callIntent.setType("text/plain");
+
+        callIntent = new Intent(Intent.ACTION_DIAL,Uri.parse("tel: 0740111222"));
+        callIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+
+        startActivity(callIntent);
+
     }
 
     public MainActivity() {
