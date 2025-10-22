@@ -15,19 +15,19 @@
 
         <TextView
             android:id="@+id/tvTitle"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
+            android:layout_weight="3"
             android:text="Title" />
 
         <EditText
             android:id="@+id/editTextText"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:ems="10"
             android:inputType="text"
-            android:text="Name" />
+            android:hint="Movie Title" />
     </LinearLayout>
 
     <LinearLayout
@@ -37,17 +37,18 @@
 
         <TextView
             android:id="@+id/tvRelease"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
+            android:layout_weight="3"
             android:text="Release" />
 
         <EditText
             android:id="@+id/editTextDate"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:ems="10"
+            android:hint="Release"
             android:inputType="date" />
     </LinearLayout>
 
@@ -58,17 +59,18 @@
 
         <TextView
             android:id="@+id/tvBudget"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
+            android:layout_weight="3"
             android:text="Budget" />
 
         <EditText
             android:id="@+id/editTextNumberDecimal"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:ems="10"
+            android:hint="Budget"
             android:inputType="numberDecimal" />
     </LinearLayout>
 
@@ -79,9 +81,9 @@
 
         <TextView
             android:id="@+id/tvGenre"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
+            android:layout_weight="3"
             android:text="Genre" />
 
         <Spinner
@@ -94,20 +96,31 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:gravity="center"
         android:orientation="horizontal">
 
         <TextView
             android:id="@+id/tvRating"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="3"
+            android:text="Rating" />
+
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Rating" />
+            android:gravity="center"
+            android:orientation="horizontal">
 
-        <RatingBar
-            android:id="@+id/ratingBar"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1" />
+            <RatingBar
+                android:id="@+id/ratingBar"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:numStars="5" />
+        </LinearLayout>
+
     </LinearLayout>
 
     <LinearLayout
@@ -117,14 +130,14 @@
 
         <TextView
             android:id="@+id/tvDuration"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
+            android:layout_weight="3"
             android:text="Duration" />
 
         <SeekBar
             android:id="@+id/seekBar"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1" />
     </LinearLayout>
@@ -136,45 +149,47 @@
 
         <TextView
             android:id="@+id/tvGuidance"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
+            android:layout_weight="3"
             android:text="Guidance" />
 
         <RadioGroup
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1" >
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="horizontal">
 
             <RadioButton
                 android:id="@+id/radioButton"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="RadioButton" />
+                android:text="G" />
 
             <RadioButton
                 android:id="@+id/radioButton2"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="RadioButton" />
+                android:text="PG" />
 
             <RadioButton
                 android:id="@+id/radioButton3"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="RadioButton" />
+                android:text="PG13" />
 
             <RadioButton
                 android:id="@+id/radioButton4"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="RadioButton" />
+                android:text="R" />
 
             <RadioButton
                 android:id="@+id/radioButton5"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="RadioButton" />
+                android:text="NC17" />
         </RadioGroup>
     </LinearLayout>
 
@@ -185,9 +200,9 @@
 
         <TextView
             android:id="@+id/tvWatched"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
+            android:layout_weight="3"
             android:text="Watched" />
 
         <Switch
@@ -195,7 +210,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Switch" />
+            android:gravity="center|center_horizontal"
+            android:text="" />
     </LinearLayout>
 
     <LinearLayout
@@ -205,19 +221,19 @@
 
         <TextView
             android:id="@+id/tvPoster"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
+            android:layout_weight="3"
             android:text="Poster" />
 
         <EditText
             android:id="@+id/editTextText2"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:ems="10"
             android:inputType="text"
-            android:text="Name" />
+            android:hint="Poster URL" />
     </LinearLayout>
 
     <LinearLayout
