@@ -1,6 +1,14 @@
 package ro.ase.ie.g1107_s04.activities;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.RadioGroup;
+import android.widget.RatingBar;
+import android.widget.SeekBar;
+import android.widget.Spinner;
+import android.widget.Switch;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -12,6 +20,17 @@ import ro.ase.ie.g1107_s04.R;
 
 public class MovieActivity extends AppCompatActivity {
 
+    private EditText etTitle;
+    private EditText etBudget;
+    private EditText etReleaseDate;
+    private EditText etPosterURL;
+    private Spinner spGenre;
+    private SeekBar sbDuration;
+    private RatingBar rbRating;
+    private Switch swWatched;
+    private RadioGroup rgGuidance;
+    private Button btnMovieAction;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -22,5 +41,33 @@ public class MovieActivity extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+
+        initializeControls();
+        initializeEvents();
+
+        Intent intent = getIntent();
+        int operationCode = intent.getIntExtra("operation_code", 0);
+        if(operationCode != 0)
+        {
+            String btnMessage = operationCode == 100?"Save Movie":"Update Movie";
+            btnMovieAction.setText(btnMessage);
+        }
+    }
+
+    private void initializeEvents() {
+
+    }
+
+    private void initializeControls() {
+        etTitle = findViewById(R.id.etTitle);
+        etBudget = findViewById(R.id.etBudget);
+        etReleaseDate = findViewById(R.id.etRelease);
+        etPosterURL = findViewById(R.id.etPoster);
+        spGenre = findViewById(R.id.spGenre);
+        sbDuration = findViewById(R.id.sbDuration);
+        rbRating = findViewById(R.id.rbRating);
+        swWatched = findViewById(R.id.swWatched);
+        rgGuidance = findViewById(R.id.rgApproval);
+        btnMovieAction = findViewById(R.id.btnMovieAction);
     }
 }
