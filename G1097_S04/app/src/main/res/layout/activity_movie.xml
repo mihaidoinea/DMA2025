@@ -2,19 +2,20 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:id="@+id/main"
     tools:context=".activities.MovieActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="15dp"
         android:orientation="horizontal">
 
         <TextView
-            android:id="@+id/tvTitle"
+            android:id="@+id/tvTile"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="3"
@@ -24,37 +25,36 @@
             android:id="@+id/etTitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
             android:ems="10"
             android:inputType="text"
-            android:hint="Movie Title" />
+            android:layout_weight="1"
+            android:hint="Movie title" />
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="15dp"
         android:orientation="horizontal">
 
         <TextView
-            android:id="@+id/tvRelease"
+            android:id="@+id/tvGenre"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="3"
-            android:text="Release" />
+            android:text="Genre" />
 
-        <EditText
-            android:id="@+id/etRelease"
+        <Spinner
+            android:id="@+id/spGenre"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:ems="10"
-            android:hint="Release Date"
-            android:inputType="date" />
+            android:layout_height="wrap_content" />
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="15dp"
         android:orientation="horizontal">
 
         <TextView
@@ -68,64 +68,16 @@
             android:id="@+id/etBudget"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
             android:ems="10"
             android:hint="Budget"
+            android:layout_weight="1"
             android:inputType="numberDecimal" />
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
-
-        <TextView
-            android:id="@+id/tvGenre"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="3"
-            android:text="Genre" />
-
-        <Spinner
-            android:id="@+id/spGenre"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:entries="@array/movie_genre"
-            android:layout_weight="1" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-
-        <TextView
-            android:id="@+id/tvRating"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="3"
-            android:text="Rating" />
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:layout_weight="1"
-            android:orientation="vertical">
-
-            <RatingBar
-                android:id="@+id/rbRating"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:numStars="5" />
-        </LinearLayout>
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_marginBottom="15dp"
         android:orientation="horizontal">
 
         <TextView
@@ -139,38 +91,95 @@
             android:id="@+id/sbDuration"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:min="0"
-            android:max="150"
-            android:layout_weight="1" />
+            android:layout_weight="1"
+            android:max="300"
+            android:min="0" />
 
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="15dp"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/tvRating"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_weight="3"
+            android:text="Rating" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="horizontal">
+
+            <RatingBar
+                android:id="@+id/rbRating"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:numStars="5"
+                android:stepSize="0.5" />
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="15dp"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/tvWatched"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_weight="3"
+            android:text="Recommended" />
+
+        <Switch
+            android:id="@+id/swWatched"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Yes/No" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="15dp"
         android:orientation="horizontal">
 
         <TextView
             android:id="@+id/tvGuidance"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_gravity="center"
             android:layout_weight="3"
             android:text="Guidance" />
 
         <RadioGroup
+            android:id="@+id/rgApproval"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:layout_weight="1"
             android:orientation="horizontal">
 
             <RadioButton
-                android:id="@+id/rbG"
+                android:id="@+id/rbGeneral"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:checked="true"
                 android:text="G" />
 
             <RadioButton
-                android:id="@+id/rbPG"
+                android:id="@+id/rbParentGuidance"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="PG" />
@@ -182,7 +191,7 @@
                 android:text="PG13" />
 
             <RadioButton
-                android:id="@+id/rbR"
+                android:id="@+id/rbRestricted"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="R" />
@@ -193,61 +202,46 @@
                 android:layout_height="wrap_content"
                 android:text="NC17" />
         </RadioGroup>
+
+
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="15dp"
         android:orientation="horizontal">
 
-        <TextView
-            android:id="@+id/tvWatched"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="3"
-            android:text="Watched" />
-
-        <Switch
-            android:id="@+id/switch1"
-            android:layout_width="match_parent"
+        <EditText
+            android:id="@+id/etRelease"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Switch" />
+            android:hint="Release date"
+            android:ems="10"
+            android:inputType="date" />
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="15dp"
         android:orientation="horizontal">
-
-        <TextView
-            android:id="@+id/tvPoster"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="3"
-            android:text="Poster" />
 
         <EditText
             android:id="@+id/etPoster"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
             android:ems="10"
             android:inputType="text"
             android:hint="Poster URL" />
     </LinearLayout>
 
-    <LinearLayout
-        android:layout_width="match_parent"
+    <Button
+        android:id="@+id/btnMovieAction"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
-
-        <Button
-            android:id="@+id/btAddUpdate"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="Add Movie" />
-    </LinearLayout>
+        android:layout_gravity="center_horizontal"
+        android:text="Save Movie" />
 
 </LinearLayout>
