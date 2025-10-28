@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">G1087_S04</string>
+    <string-array name="movie_genre">
+        <item>Drama</item>
+        <item>Action</item>
+        <item>Comedy</item>
+        <item>Adventure</item>
+    </string-array>
 </resources>
