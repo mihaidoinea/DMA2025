@@ -29,6 +29,41 @@ public class Movie {
         this.recommended = recommended;
     }
 
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public void setBudget(Float budget) {
+        this.budget = budget;
+    }
+
+    public void setRelease(Date release) {
+        this.release = release;
+    }
+
+    public void setGenre(EnumGenre genre) {
+        this.genre = genre;
+    }
+
+    public void setpApproval(EnumParentalApproval pApproval) {
+        this.pApproval = pApproval;
+    }
+
+    public void setDuration(Integer duration) {
+        this.duration = duration;
+    }
+
+    public void setRating(Float rating) {
+        this.rating = rating;
+    }
+
+    public void setRecommended(Boolean recommended) {
+        this.recommended = recommended;
+    }
+
+    public Movie() {
+    }
+
     @Override
     public String toString() {
         return "Movie{" +

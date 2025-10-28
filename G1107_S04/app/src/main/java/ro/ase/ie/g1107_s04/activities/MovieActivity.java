@@ -2,6 +2,7 @@ package ro.ase.ie.g1107_s04.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioGroup;
@@ -17,6 +18,7 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 import ro.ase.ie.g1107_s04.R;
+import ro.ase.ie.g1107_s04.model.Movie;
 
 public class MovieActivity extends AppCompatActivity {
 
@@ -30,6 +32,9 @@ public class MovieActivity extends AppCompatActivity {
     private Switch swWatched;
     private RadioGroup rgGuidance;
     private Button btnMovieAction;
+
+    private Movie movie;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,11 +56,21 @@ public class MovieActivity extends AppCompatActivity {
         {
             String btnMessage = operationCode == 100?"Save Movie":"Update Movie";
             btnMovieAction.setText(btnMessage);
+            if(operationCode == 100)
+                movie = new Movie();
+            else {
+                //get the movie from the intent
+            }
         }
     }
 
     private void initializeEvents() {
-
+        btnMovieAction.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                movie.setTitle(etTitle.getText().toString());
+            }
+        });
     }
 
     private void initializeControls() {
