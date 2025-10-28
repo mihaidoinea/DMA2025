@@ -19,7 +19,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="3"
-            android:text="Title" />
+            android:text="@string/title" />
 
         <EditText
             android:id="@+id/etTitle"
@@ -28,7 +28,7 @@
             android:ems="10"
             android:inputType="text"
             android:layout_weight="1"
-            android:hint="Movie title" />
+            android:hint="@string/movie_title_hint" />
     </LinearLayout>
 
     <LinearLayout
@@ -42,7 +42,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="3"
-            android:text="Genre" />
+            android:text="@string/genre" />
 
         <Spinner
             android:id="@+id/spGenre"
@@ -62,14 +62,14 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="3"
-            android:text="Budget" />
+            android:text="@string/budget" />
 
         <EditText
             android:id="@+id/etBudget"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
-            android:hint="Budget"
+            android:hint="@string/budget_hint"
             android:layout_weight="1"
             android:inputType="numberDecimal" />
     </LinearLayout>
@@ -85,7 +85,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="3"
-            android:text="Duration" />
+            android:text="@string/duration" />
 
         <SeekBar
             android:id="@+id/sbDuration"
@@ -109,7 +109,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_weight="3"
-            android:text="Rating" />
+            android:text="@string/rating" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -139,7 +139,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_weight="3"
-            android:text="Recommended" />
+            android:text="@string/recommended" />
 
         <Switch
             android:id="@+id/swWatched"
@@ -162,7 +162,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_weight="3"
-            android:text="Guidance" />
+            android:text="@string/guidance" />
 
         <RadioGroup
             android:id="@+id/rgApproval"
@@ -217,7 +217,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:hint="Release date"
+            android:hint="@string/release_date_hint"
             android:ems="10"
             android:inputType="date" />
     </LinearLayout>
@@ -234,7 +234,7 @@
             android:layout_height="wrap_content"
             android:ems="10"
             android:inputType="text"
-            android:hint="Poster URL" />
+            android:hint="@string/poster_url_hint" />
     </LinearLayout>
 
     <Button
@@ -242,6 +242,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:text="Save Movie" />
+        android:text="@string/movie_action_btn" />
 
 </LinearLayout>

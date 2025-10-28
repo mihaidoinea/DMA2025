@@ -1,3 +1,21 @@
 <resources>
     <string name="app_name">G1107_S04</string>
+    <string name="title">Title</string>
+    <string name="movie_title_hint">Movie title</string>
+    <string name="genre">Genre</string>
+    <string name="budget">Budget</string>
+    <string name="budget_hint">Budget</string>
+    <string name="duration">Duration</string>
+    <string name="rating">Rating</string>
+    <string name="recommended">Recommended</string>
+    <string name="guidance">Guidance</string>
+    <string name="release_date_hint">Release date</string>
+    <string name="poster_url_hint">Poster URL</string>
+    <string name="movie_action_btn">Save Movie</string>
+    <string-array name="genre_enum">
+        <item>Drama</item>
+        <item>Comedy</item>
+        <item>Action</item>
+        <item>Adventure</item>
+    </string-array>
 </resources>

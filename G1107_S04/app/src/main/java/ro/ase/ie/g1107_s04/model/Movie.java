@@ -1,4 +1,4 @@
-package ro.ase.ie.g1107_s04;
+package ro.ase.ie.g1107_s04.model;
 
 import java.util.Date;
 
