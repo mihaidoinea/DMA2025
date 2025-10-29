@@ -47,6 +47,7 @@
         <Spinner
             android:id="@+id/spGenre"
             android:layout_width="match_parent"
+            android:entries="@array/movie_genre"
             android:layout_weight="1"
             android:layout_height="wrap_content" />
     </LinearLayout>
