@@ -10,6 +10,7 @@ import android.widget.RatingBar;
 import android.widget.SeekBar;
 import android.widget.Spinner;
 import android.widget.Switch;
+import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -79,25 +80,73 @@ public class MovieActivity extends AppCompatActivity
         btnMovieAction = findViewById(R.id.btnMovieAction);
     }
 
+    private ValidationResult validateAndCreateMovie() {
+        String title = etTitle.getText().toString().trim();
+        if(title.isEmpty())
+        {
+            return ValidationResult.Error( "Movie Title is mandatory", FieldEnum.TITLE);
+        }
+        //all other validations here
+
+        movie.setTitle(title);
+        return ValidationResult.Valid();
+    }
+
     private void initializeEvents() {
         btnMovieAction.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
-                movie.setTitle(etTitle.getText().toString());
-                movie.setRating(rbRating.getRating());
-                
-                Intent intent = new Intent();
-                //set the movie object as Intent data
-                setResult(RESULT_OK, intent);
-                finish();
+                ValidationResult results = validateAndCreateMovie();
+
+                if(results.ok) {
+                    Intent intent = new Intent();
+                    //set the movie object as Intent data
+                    setResult(RESULT_OK, intent);
+                    finish();
+                }
+                else {
+                    if(results.field == FieldEnum.TITLE) etTitle.setError(results.message);
+                    else if(results.field == FieldEnum.RELEASE) etRelease.setError(results.message);
+                    else if(results.field == FieldEnum.BUDGET) etBudget.setError(results.message);
+                    else if(results.field == FieldEnum.POSTER) etPosterUrl.setError(results.message);
+
+                    Toast.makeText(MovieActivity.this, results.message, Toast.LENGTH_LONG).show();
+                }
             }
         });
 //        btnMovieAction.setOnClickListener(this);
     }
 
+
+
 /*    @Override
     public void onClick(View view) {
 
     }*/
+
+    private enum FieldEnum {TITLE, RELEASE, BUDGET, POSTER, GENERIC};
+
+    private static class ValidationResult
+    {
+        final boolean ok;
+        final String message;
+        final FieldEnum field;
+
+        private ValidationResult(boolean ok, String message, FieldEnum field)
+        {
+            this.ok = ok;
+            this.message = message;
+            this.field = field;
+        }
+        static ValidationResult Valid()
+        {
+            return new ValidationResult(true, null, FieldEnum.GENERIC);
+        }
+        static ValidationResult Error(String message, FieldEnum field)
+        {
+            return new ValidationResult(false, message, field);
+        }
+    }
+
 }
