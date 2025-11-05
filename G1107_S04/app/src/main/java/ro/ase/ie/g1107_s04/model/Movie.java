@@ -4,21 +4,17 @@ import java.util.Date;
 
 public class Movie {
 
-
-    //RUSU MIHNEA
-    //TANISLAV ALIN
-    //TUDOR DANIEL
-    
     private String title;
-    private Float budget;
+    private Double budget;
     private Date release;
     private EnumGenre genre;
     private EnumParentalApproval pApproval;
     private Integer duration;
     private Float rating;
     private Boolean recommended;
+    private String posterUrl;
 
-    public Movie(String title, Float budget, Date release, EnumGenre genre, EnumParentalApproval pApproval, Integer duration, Float rating, Boolean recommended) {
+    public Movie(String title, Double budget, Date release, EnumGenre genre, EnumParentalApproval pApproval, Integer duration, Float rating, Boolean recommended, String posterUrl) {
         this.title = title;
         this.budget = budget;
         this.release = release;
@@ -27,13 +23,54 @@ public class Movie {
         this.duration = duration;
         this.rating = rating;
         this.recommended = recommended;
+        this.posterUrl = posterUrl;
+    }
+
+    public String getPosterUrl() {
+        return posterUrl;
+    }
+
+    public void setPosterUrl(String posterUrl) {
+        this.posterUrl = posterUrl;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public Double getBudget() {
+        return budget;
+    }
+
+    public Date getRelease() {
+        return release;
+    }
+
+    public EnumGenre getGenre() {
+        return genre;
+    }
+
+    public EnumParentalApproval getpApproval() {
+        return pApproval;
+    }
+
+    public Integer getDuration() {
+        return duration;
+    }
+
+    public Float getRating() {
+        return rating;
+    }
+
+    public Boolean getRecommended() {
+        return recommended;
     }
 
     public void setTitle(String title) {
         this.title = title;
     }
 
-    public void setBudget(Float budget) {
+    public void setBudget(Double budget) {
         this.budget = budget;
     }
 
@@ -75,6 +112,7 @@ public class Movie {
                 ", duration=" + duration +
                 ", rating=" + rating +
                 ", recommended=" + recommended +
+                ", posterUrl='" + posterUrl + '\'' +
                 '}';
     }
 }

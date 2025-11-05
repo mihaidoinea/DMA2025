@@ -2,29 +2,39 @@ package ro.ase.ie.g1107_s04.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
+import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.RatingBar;
 import android.widget.SeekBar;
 import android.widget.Spinner;
 import android.widget.Switch;
-
+import android.widget.Toast;
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
-
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.Locale;
 import ro.ase.ie.g1107_s04.R;
+import ro.ase.ie.g1107_s04.model.EnumGenre;
+import ro.ase.ie.g1107_s04.model.EnumParentalApproval;
 import ro.ase.ie.g1107_s04.model.Movie;
 
 public class MovieActivity extends AppCompatActivity {
 
+    private static final String MOVIE_ACTIVITY_TAG = MovieActivity.class.getName().toString();
     private EditText etTitle;
     private EditText etBudget;
-    private EditText etReleaseDate;
+    private EditText etRelease;
     private EditText etPosterURL;
     private Spinner spGenre;
     private SeekBar sbDuration;
@@ -32,9 +42,9 @@ public class MovieActivity extends AppCompatActivity {
     private Switch swWatched;
     private RadioGroup rgGuidance;
     private Button btnMovieAction;
-
+    private final SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd", Locale.US);
     private Movie movie;
-
+    private Calendar calendar = Calendar.getInstance();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,10 +75,22 @@ public class MovieActivity extends AppCompatActivity {
     }
 
     private void initializeEvents() {
+
         btnMovieAction.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 movie.setTitle(etTitle.getText().toString());
+
+                ValidationResult res = validateAndBuildMovie();
+                if (!res.ok) {
+                    // show first error inline (and you can accumulate more)
+                    if (res.field == Field.TITLE) etTitle.setError(res.message);
+                    else if (res.field == Field.RELEASE) etRelease.setError(res.message);
+                    else if (res.field == Field.BUDGET) etBudget.setError(res.message);
+                    else if (res.field == Field.POSTER) etPosterURL.setError(res.message);
+                    Toast.makeText(MovieActivity.this, res.message, Toast.LENGTH_SHORT).show();
+                    return;
+                }
             }
         });
     }
@@ -76,7 +98,7 @@ public class MovieActivity extends AppCompatActivity {
     private void initializeControls() {
         etTitle = findViewById(R.id.etTitle);
         etBudget = findViewById(R.id.etBudget);
-        etReleaseDate = findViewById(R.id.etRelease);
+        etRelease = findViewById(R.id.etRelease);
         etPosterURL = findViewById(R.id.etPoster);
         spGenre = findViewById(R.id.spGenre);
         sbDuration = findViewById(R.id.sbDuration);
@@ -85,4 +107,78 @@ public class MovieActivity extends AppCompatActivity {
         rgGuidance = findViewById(R.id.rgApproval);
         btnMovieAction = findViewById(R.id.btnMovieAction);
     }
+
+    private ValidationResult validateAndBuildMovie() {
+        String title = etTitle.getText().toString().trim();
+        if (title.isEmpty())
+            return ValidationResult.error(Field.TITLE, "Movie title is required.");
+
+        String releaseStr = etRelease.getText().toString().trim();
+        Date release = null;
+        if (!releaseStr.isEmpty()) {
+            try { release = df.parse(releaseStr); }
+            catch (ParseException e) { return ValidationResult.error(Field.RELEASE, "Use date format yyyy-MM-dd."); }
+        }
+        else
+            return ValidationResult.error(Field.RELEASE, "Release date is mandatory.");
+
+        String budgetStr = etBudget.getText().toString().trim();
+        double budget = 0;
+        if (!budgetStr.isEmpty()) {
+            try {
+                budget = Double.parseDouble(budgetStr);
+                if (budget < 0) return ValidationResult.error(Field.BUDGET, "Budget cannot be negative.");
+            } catch (NumberFormatException e) {
+                return ValidationResult.error(Field.BUDGET, "Budget must be a number.");
+            }
+        }
+        else
+            return ValidationResult.error(Field.BUDGET, "Movie budget is required.");
+
+        String genre = String.valueOf(spGenre.getSelectedItem());
+        int duration = sbDuration.getProgress(); // minutes
+        float rating = rbRating.getRating();
+        boolean watched = swWatched.isChecked();
+        int checkedId = rgGuidance.getCheckedRadioButtonId();
+        String guidance = null;
+        if (checkedId != -1) {
+            RadioButton rb = findViewById(checkedId);
+            guidance = rb.getText().toString();
+        }
+
+        String poster = etPosterURL.getText().toString().trim();
+        if (!poster.isEmpty() && !Patterns.WEB_URL.matcher(poster).matches()) {
+            return ValidationResult.error(Field.POSTER, "Poster must be a valid URL.");
+        }
+        else if(poster.isEmpty())
+        {
+            return ValidationResult.error(Field.POSTER, "Poster URL is required.");
+        }
+
+        // Assign to the existing movie (create or update):
+        if (movie == null) movie = new Movie();
+        movie.setTitle(title);
+        movie.setRelease(release);
+        movie.setBudget(budget);
+        movie.setPosterUrl(poster.isEmpty() ? null : poster);
+        movie.setGenre(EnumGenre.valueOf(genre));
+        movie.setDuration(duration);
+        movie.setRating(rating);
+        movie.setRecommended(watched);
+        movie.setpApproval(EnumParentalApproval.valueOf(guidance));
+
+        Log.i(MOVIE_ACTIVITY_TAG, movie.toString());
+        return ValidationResult.ok();
+    }
+
+    private enum Field { TITLE, RELEASE, BUDGET, POSTER, GENERIC }
+    private static class ValidationResult {
+        final boolean ok; final Field field; final String message;
+        private ValidationResult(boolean ok, Field field, String message) {
+            this.ok = ok; this.field = field; this.message = message;
+        }
+        static ValidationResult ok() { return new ValidationResult(true, Field.GENERIC, null); }
+        static ValidationResult error(Field f, String msg) { return new ValidationResult(false, f, msg); }
+    }
+
 }
