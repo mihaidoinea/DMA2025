@@ -3,6 +3,7 @@ package ro.ase.ie.g1097_s04.activities;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -18,6 +19,11 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
 
 import ro.ase.ie.g1097_s04.R;
 import ro.ase.ie.g1097_s04.models.Movie;
@@ -36,6 +42,8 @@ public class MovieActivity extends AppCompatActivity
     private Switch swWatched;
     private RadioGroup rgGuidance;
     private Button btnMovieAction;
+    private SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", Locale.US);
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -116,6 +124,53 @@ public class MovieActivity extends AppCompatActivity
             return ValidationResult.error(Field.TITLE, "Movie title is mandatory!");
         }
         //validations
+
+        String budgetStr = etBudget.getText().toString();
+        double budget = 0.0;
+        if(budgetStr.isEmpty())
+        {
+            return ValidationResult.error(Field.BUDGET, "Movie budget is mandatory!");
+        }
+        else
+        {
+            try {
+                budget = Double.parseDouble(budgetStr);
+                if(budget <= 0)
+                    return ValidationResult.error(Field.BUDGET, "Budget value must be greater than 0!");
+            } catch (NumberFormatException e) {
+               return ValidationResult.error(Field.BUDGET, "Budget must be a valid number!");
+            }
+        }
+
+        String releaseStr = etRelease.getText().toString().trim();
+        Date release = null;
+        if(releaseStr.isEmpty())
+        {
+            return ValidationResult.error(Field.RELEASE, "Release date is required!");
+        }
+        else {
+            try {
+                release = sdf.parse(releaseStr);
+            } catch (ParseException e) {
+                return ValidationResult.error(Field.RELEASE, "Release date doesn't have a valid format (yyyy-MM-dd)");
+            }
+        }
+
+        int duration = sbDuration.getProgress();
+        if(duration == 0)
+        {
+            return ValidationResult.error(Field.DURATION, "Duration must be greater than 0!");
+        }
+
+        String poster = etPoster.getText().toString().trim();
+        if(poster.isEmpty())
+        {
+            return ValidationResult.error(Field.POSTER, "Poster URL is required!");
+        }
+        else {
+            if(!Patterns.WEB_URL.matcher(poster).matches())
+                return ValidationResult.error(Field.POSTER, "URL is not a valid address!");
+        }
 
         //setters
         movie.setTitle(title);
