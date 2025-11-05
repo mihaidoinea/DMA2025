@@ -10,6 +10,7 @@ import android.widget.RatingBar;
 import android.widget.SeekBar;
 import android.widget.Spinner;
 import android.widget.Switch;
+import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -86,15 +87,70 @@ public class MovieActivity extends AppCompatActivity {
         btnMovieAction.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //complete movie attributes
-                movie.setTitle(etTitle.getText().toString());
-                movie.setRating(rbRating.getRating());
 
-                Intent intent = new Intent();
-                //set the movie as payload for this intent
-                setResult(RESULT_OK, intent);
-                finish();
+                ValidationResult result = validateFormAndBuildMovie();
+
+                if(result.validForm == true) {
+
+                    Intent intent = new Intent();
+                    //set the movie as payload for this intent
+                    setResult(RESULT_OK, intent);
+                    finish();
+                }
+                else {
+                    switch (result.field)
+                    {
+                        case TITLE:
+                            etTitle.setError(result.message);
+                            break;
+                        case RELEASE:
+                            etRelease.setError(result.message);
+                            break;
+                        case BUDGET:
+                            etBudget.setError(result.message);
+                            break;
+                        case POSTER:
+                            etPoster.setError(result.message);
+                            break;
+                    }
+                    Toast.makeText(MovieActivity.this, result.message, Toast.LENGTH_LONG).show();
+                }
             }
         });
     }
+
+    private ValidationResult validateFormAndBuildMovie() {
+        String title = etTitle.getText().toString().trim();
+        if(title.isEmpty())
+        {
+            return ValidationResult.error(Field.TITLE, "Movie title is mandatory!");
+        }
+
+        movie.setTitle(title);
+    }
+
+    private enum Field { TITLE, RELEASE, BUDGET, POSTER, DURATION, GENERIC };
+    private static class ValidationResult
+    {
+        final boolean validForm;
+        final Field field;
+        final String message;
+
+        private ValidationResult(boolean ok, Field field, String message)
+        {
+            this.validForm = ok;
+            this.field = field;
+            this.message = message;
+        }
+
+        static ValidationResult ok()
+        {
+            return new ValidationResult(true, Field.GENERIC, null);
+        }
+        static ValidationResult error(Field field, String message)
+        {
+            return new ValidationResult(false,field, message);
+        }
+    }
+
 }
