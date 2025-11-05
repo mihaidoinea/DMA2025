@@ -3,10 +3,12 @@ package ro.ase.ie.g1091_s04.activities;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.util.Log;
 import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.RatingBar;
 import android.widget.SeekBar;
@@ -28,6 +30,7 @@ import java.util.Locale;
 import ro.ase.ie.g1091_s04.R;
 import ro.ase.ie.g1091_s04.models.GenreEnum;
 import ro.ase.ie.g1091_s04.models.Movie;
+import ro.ase.ie.g1091_s04.models.ParentalGuidanceEnum;
 
 public class MovieActivity extends AppCompatActivity
 //    implements View.OnClickListener
@@ -138,6 +141,9 @@ public class MovieActivity extends AppCompatActivity
                 return ValidationResult.error(Field.RELEASE, "Must be a valid date (yyyy-MM-dd)");
             }
         }
+
+        sbDuration.getProgressDrawable().setTint(Color.BLACK);
+
         int duration = sbDuration.getProgress();
         if(duration == 0)
         {
@@ -155,6 +161,11 @@ public class MovieActivity extends AppCompatActivity
                 return ValidationResult.error(Field.POSTER, "Must be a valid URL!");
             }
         }
+
+        int checkedRadioButtonId = rgGuidance.getCheckedRadioButtonId();
+        RadioButton rb = findViewById(checkedRadioButtonId);
+        String guidance = rb.toString();
+
         movie.setTitle(title);
         movie.setBudget(budget);
         movie.setDuration(duration);
@@ -163,7 +174,10 @@ public class MovieActivity extends AppCompatActivity
         movie.setGenre(GenreEnum.valueOf(spGenre.getSelectedItem().toString()));
         movie.setRating(rbRating.getRating());
         movie.setWatched(swWatched.isChecked());
+        movie.setpGuidance(ParentalGuidanceEnum.valueOf(guidance));
 
+        Log.i("MovieActivityTag", movie.toString());
+        return ValidationResult.valid();
     }
 
     private void initializeControls() {
