@@ -129,7 +129,6 @@ public class MovieActivity extends AppCompatActivity
         else if(!poster.isEmpty())
             return ValidationResult.Error( "Poster is required.", FieldEnum.POSTER);
 
-
         movie.setTitle(title);
         movie.setRelease(release);
         movie.setBudget(budget);
@@ -161,6 +160,7 @@ public class MovieActivity extends AppCompatActivity
 
                 if(results.ok) {
                     Intent intent = new Intent();
+                    intent.putExtra("movie", movie);
                     //set the movie object as Intent data
                     setResult(RESULT_OK, intent);
                     finish();
