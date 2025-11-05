@@ -1,6 +1,7 @@
 package ro.ase.ie.g1097_s04.activities;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -10,6 +11,7 @@ import android.widget.RatingBar;
 import android.widget.SeekBar;
 import android.widget.Spinner;
 import android.widget.Switch;
+import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -73,18 +75,52 @@ public class MovieActivity extends AppCompatActivity
         btnMovieAction.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                movie.setTitle(etTitle.getText().toString());
-                movie.setBudget(Double.parseDouble(etBudget.getText().toString()));
-                movie.setDuration(sbDuration.getProgress());
-                movie.setRating(rbRating.getRating());
 
-                Intent intent = new Intent();
-                //save movie instance in the intent
-                setResult(RESULT_OK, intent);
-                finish();
+                ValidationResult results = validateAndBuildMovie();
+                if(results.validForm == true) {
+                    Intent intent = new Intent();
+                    //save movie instance in the intent
+                    setResult(RESULT_OK, intent);
+                    finish();
+                }
+                else {
+                    switch (results.field)
+                    {
+                        case TITLE:
+                            etTitle.setError(results.message);
+                            break;
+                        case BUDGET:
+                            etBudget.setError(results.message);
+                            break;
+                        case DURATION:
+                            sbDuration.getProgressDrawable().setTint(Color.RED);
+                            break;
+                        case RELEASE:
+                            etRelease.setError(results.message);
+                            break;
+                        case POSTER:
+                            etPoster.setError(results.message);
+                            break;
+                    }
+                    Toast.makeText(MovieActivity.this, results.message, Toast.LENGTH_LONG).show();
+                }
             }
         });
 //        btnMovieAction.setOnClickListener(this);
+    }
+
+    private ValidationResult validateAndBuildMovie() {
+        String title = etTitle.getText().toString().trim();
+        if(title.isEmpty())
+        {
+            return ValidationResult.error(Field.TITLE, "Movie title is mandatory!");
+        }
+        //validations
+
+        //setters
+        movie.setTitle(title);
+
+        return ValidationResult.valid();
     }
 
     private void handleIntent() {
@@ -107,4 +143,31 @@ public class MovieActivity extends AppCompatActivity
             finish();
         }
     }
+
+    //Helper Validation Class
+    private enum Field {TITLE, BUDGET, DURATION, RELEASE, POSTER, GENERIC};
+    private static class ValidationResult
+    {
+        final boolean validForm;
+        final Field field;
+        final String message;
+
+        private ValidationResult(boolean valid, Field field, String message)
+        {
+            this.validForm = valid;
+            this.field = field;
+            this.message = message;
+        }
+        static ValidationResult valid()
+        {
+            return new ValidationResult(true, Field.GENERIC, null);
+        }
+        static ValidationResult error(Field field, String message)
+        {
+            return new ValidationResult(false, field, message);
+        }
+
+    }
+
+
 }
