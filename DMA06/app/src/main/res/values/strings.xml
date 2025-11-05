@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">DMA05</string>
+    <string-array name="tipSistem">
+        <item>WIndow Mobile</item>
+        <item>Android</item>
+    </string-array>
+</resources>
