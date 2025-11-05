@@ -18,7 +18,13 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
+
 import ro.ase.ie.g1106_s04.R;
+import ro.ase.ie.g1106_s04.model.GenreEnum;
 import ro.ase.ie.g1106_s04.model.Movie;
 
 public class MovieActivity extends AppCompatActivity {
@@ -33,8 +39,9 @@ public class MovieActivity extends AppCompatActivity {
     private Switch swWatched;
     private Button btnMovieAction;
     private Spinner spGenre;
-
     private Movie movie;
+    SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", Locale.US);
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -125,8 +132,50 @@ public class MovieActivity extends AppCompatActivity {
         {
             return ValidationResult.error(Field.TITLE, "Movie title is mandatory!");
         }
+        String budgetStr = etBudget.getText().toString();
+        double budget = 0.0;
+        if(!budgetStr.isEmpty()) {
+            try {
+                budget = Double.parseDouble(budgetStr);
+            } catch (NumberFormatException e) {
+                return ValidationResult.error(Field.BUDGET, "Budget must be a valid number!");
+            }
+        }
+        else
+            return ValidationResult.error(Field.BUDGET, "Movie budget is required!");
+
+        String releaseDateStr = etRelease.getText().toString().trim();
+        Date release = null;
+        if(!releaseDateStr.isEmpty())
+        {
+            try {
+                release = sdf.parse(releaseDateStr);
+            } catch (ParseException e) {
+                return ValidationResult.error(Field.RELEASE, "Data not in the correct format: yyyy-MM-dd");
+            }
+        }
+        else
+        {
+            return ValidationResult.error(Field.RELEASE, "Release date is required!");
+        }
+
+        int duration = sbDuration.getProgress();
+        if(duration ==0)
+        {
+            return ValidationResult.error(Field.RELEASE, "Movie duration should be > 0!");
+        }
+        String posterUrl = etPoster.getText().toString().trim();
+        //do validation
 
         movie.setTitle(title);
+        movie.setBudget(budget);
+        movie.setRelease(release);
+        movie.setRating(rbRating.getRating());
+        movie.setPosterUrl(posterUrl);
+        movie.setDuration(duration);
+        movie.setGenre(GenreEnum.valueOf(spGenre.getSelectedItem().toString()));
+        movie.setWatched(swWatched.isChecked());
+        
     }
 
     private enum Field { TITLE, RELEASE, BUDGET, POSTER, DURATION, GENERIC };
