@@ -3,6 +3,7 @@ package ro.ase.ie.g1097_s04.activities;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.util.Log;
 import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
@@ -156,6 +157,7 @@ public class MovieActivity extends AppCompatActivity
             }
         }
 
+        sbDuration.getProgressDrawable().setTint(Color.BLACK);
         int duration = sbDuration.getProgress();
         if(duration == 0)
         {
@@ -174,6 +176,8 @@ public class MovieActivity extends AppCompatActivity
 
         //setters
         movie.setTitle(title);
+
+        Log.i("MovieActivityTag", movie.toString());
 
         return ValidationResult.valid();
     }
