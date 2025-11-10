@@ -147,12 +147,11 @@ public class MovieActivity extends AppCompatActivity {
         }
 
         String poster = etPosterURL.getText().toString().trim();
-        if (!poster.isEmpty() && !Patterns.WEB_URL.matcher(poster).matches()) {
-            return ValidationResult.error(Field.POSTER, "Poster must be a valid URL.");
-        }
-        else if(poster.isEmpty())
+        if(poster.isEmpty())
         {
             return ValidationResult.error(Field.POSTER, "Poster URL is required.");
+        }else if (!Patterns.WEB_URL.matcher(poster).matches()) {
+            return ValidationResult.error(Field.POSTER, "Poster must be a valid URL.");
         }
 
         // Assign to the existing movie (create or update):
