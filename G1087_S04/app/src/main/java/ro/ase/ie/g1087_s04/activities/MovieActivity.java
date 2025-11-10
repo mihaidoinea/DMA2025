@@ -95,7 +95,7 @@ public class MovieActivity extends AppCompatActivity
         String title = etTitle.getText().toString().trim();
         if(title.isEmpty())
         {
-            return ValidationResult.Error( "Movie Title is mandatory", FieldEnum.TITLE);
+            return ValidationResult.Error( "Movie title is mandatory!", FieldEnum.TITLE);
         }
         //all other validations here
 
@@ -114,7 +114,7 @@ public class MovieActivity extends AppCompatActivity
             try {
                 budget = Double.parseDouble(budgetStr);
                 if (budget < 0)
-                    return ValidationResult.Error("Budget cannot be negative.", FieldEnum.BUDGET);
+                    return ValidationResult.Error("Budget cannot be negative value.", FieldEnum.BUDGET);
             } catch (NumberFormatException e) {
                 return ValidationResult.Error("Budget must be a number.", FieldEnum.BUDGET);
             }
@@ -123,11 +123,11 @@ public class MovieActivity extends AppCompatActivity
             return ValidationResult.Error( "Budget is required.", FieldEnum.BUDGET);
 
         String poster = etPosterUrl.getText().toString().trim();
-        if (!poster.isEmpty() && !Patterns.WEB_URL.matcher(poster).matches()) {
+        if(poster.isEmpty())
+            return ValidationResult.Error( "Poster is required.", FieldEnum.POSTER);
+        else if (!Patterns.WEB_URL.matcher(poster).matches()) {
             return ValidationResult.Error("Poster must be a valid URL.",FieldEnum.POSTER);
         }
-        else if(!poster.isEmpty())
-            return ValidationResult.Error( "Poster is required.", FieldEnum.POSTER);
 
         movie.setTitle(title);
         movie.setRelease(release);
