@@ -1,10 +1,14 @@
 package ro.ase.ie.g1106_s04.activities;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
+import android.util.Log;
+import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.RatingBar;
 import android.widget.SeekBar;
@@ -26,6 +30,7 @@ import java.util.Locale;
 import ro.ase.ie.g1106_s04.R;
 import ro.ase.ie.g1106_s04.model.GenreEnum;
 import ro.ase.ie.g1106_s04.model.Movie;
+import ro.ase.ie.g1106_s04.model.ParentalGuidanceEnum;
 
 public class MovieActivity extends AppCompatActivity {
 
@@ -119,6 +124,9 @@ public class MovieActivity extends AppCompatActivity {
                         case POSTER:
                             etPoster.setError(result.message);
                             break;
+                        case DURATION:
+                            sbDuration.getProgressDrawable().setTint(Color.RED);
+                            break;
                     }
                     Toast.makeText(MovieActivity.this, result.message, Toast.LENGTH_LONG).show();
                 }
@@ -137,12 +145,21 @@ public class MovieActivity extends AppCompatActivity {
         if(!budgetStr.isEmpty()) {
             try {
                 budget = Double.parseDouble(budgetStr);
+                if(budget <= 0)
+                    return ValidationResult.error(Field.BUDGET, "Budget must be greater than 0!");
             } catch (NumberFormatException e) {
                 return ValidationResult.error(Field.BUDGET, "Budget must be a valid number!");
             }
         }
         else
             return ValidationResult.error(Field.BUDGET, "Movie budget is required!");
+
+        sbDuration.getProgressDrawable().setTint(Color.BLACK);
+        int duration = sbDuration.getProgress();
+        if(duration ==0)
+        {
+            return ValidationResult.error(Field.DURATION, "Movie duration should be greater than 0!");
+        }
 
         String releaseDateStr = etRelease.getText().toString().trim();
         Date release = null;
@@ -159,23 +176,33 @@ public class MovieActivity extends AppCompatActivity {
             return ValidationResult.error(Field.RELEASE, "Release date is required!");
         }
 
-        int duration = sbDuration.getProgress();
-        if(duration ==0)
+        String poster = etPoster.getText().toString().trim();
+        if(poster.isEmpty())
         {
-            return ValidationResult.error(Field.RELEASE, "Movie duration should be > 0!");
+            return ValidationResult.error(Field.POSTER, "Poster URL is required!");
         }
-        String posterUrl = etPoster.getText().toString().trim();
-        //do validation
+        else {
+            if(!Patterns.WEB_URL.matcher(poster).matches())
+                return ValidationResult.error(Field.POSTER, "Poster URL has incorrect format!");
+        }
+
+        int id = rgGuidance.getCheckedRadioButtonId();
+        RadioButton radioButton = findViewById(id);
+        String guidance = radioButton.getText().toString();
 
         movie.setTitle(title);
         movie.setBudget(budget);
         movie.setRelease(release);
         movie.setRating(rbRating.getRating());
-        movie.setPosterUrl(posterUrl);
+        movie.setPosterUrl(poster);
         movie.setDuration(duration);
         movie.setGenre(GenreEnum.valueOf(spGenre.getSelectedItem().toString()));
         movie.setWatched(swWatched.isChecked());
-        
+        movie.setpGuidance(ParentalGuidanceEnum.valueOf(guidance));
+
+        Log.i("MovieActivityTag", movie.toString());
+
+        return ValidationResult.ok();
     }
 
     private enum Field { TITLE, RELEASE, BUDGET, POSTER, DURATION, GENERIC };
@@ -201,5 +228,4 @@ public class MovieActivity extends AppCompatActivity {
             return new ValidationResult(false,field, message);
         }
     }
-
 }
