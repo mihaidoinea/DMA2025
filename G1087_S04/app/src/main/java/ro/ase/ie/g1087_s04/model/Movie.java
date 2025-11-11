@@ -7,8 +7,6 @@ import androidx.annotation.NonNull;
 
 import java.util.Date;
 
-
-//COSMA ELENA
 public class Movie implements Parcelable {
     private String title; //EditText
     private Double budget; //EditText

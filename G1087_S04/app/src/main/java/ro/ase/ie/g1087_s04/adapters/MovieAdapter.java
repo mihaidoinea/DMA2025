@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 import ro.ase.ie.g1087_s04.R;
@@ -34,8 +35,9 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieHolder> {
     @Override
     public void onBindViewHolder(@NonNull MovieHolder holder, int position) {
         Movie movie = movieArrayList.get(position);
-        holder.movieTitle.setText(movie.getTitle());
+        holder.movieTitle.setText(movie.getTitle() + "(" + movie.getGenre() + ")");
         holder.movieRating.setRating(movie.getRating());
+        holder.movieRelease.setText(new SimpleDateFormat().format(movie.getRelease()));
     }
 
     @Override
