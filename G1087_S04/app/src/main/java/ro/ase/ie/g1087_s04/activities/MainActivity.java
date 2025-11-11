@@ -2,6 +2,8 @@ package ro.ase.ie.g1087_s04.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Parcelable;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -19,6 +21,7 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 import ro.ase.ie.g1087_s04.R;
+import ro.ase.ie.g1087_s04.model.Movie;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -41,7 +44,12 @@ public class MainActivity extends AppCompatActivity {
                 new ActivityResultCallback<ActivityResult>() {
                     @Override
                     public void onActivityResult(ActivityResult o) {
-
+                        if(o.getResultCode() == RESULT_OK)
+                        {
+                            Intent data = o.getData();
+                            Movie movie = data.getParcelableExtra("movie");
+                            Log.d("MainActivityTag", movie.toString());
+                        }
                     }
                 });
     }
