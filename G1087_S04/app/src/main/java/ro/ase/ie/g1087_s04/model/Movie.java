@@ -169,6 +169,42 @@ public class Movie implements Parcelable {
         }
 
     }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public Double getBudget() {
+        return budget;
+    }
+
+    public Date getRelease() {
+        return release;
+    }
+
+    public GenreEnum getGenre() {
+        return genre;
+    }
+
+    public Integer getDuration() {
+        return duration;
+    }
+
+    public ParentalApprovalEnum getpApproval() {
+        return pApproval;
+    }
+
+    public Float getRating() {
+        return rating;
+    }
+
+    public Boolean getWatched() {
+        return watched;
+    }
+
+    public String getPosterUrl() {
+        return posterUrl;
+    }
 }
 
 
