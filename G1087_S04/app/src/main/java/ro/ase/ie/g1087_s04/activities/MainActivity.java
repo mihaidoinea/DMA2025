@@ -62,6 +62,8 @@ public class MainActivity extends AppCompatActivity {
                             Intent data = o.getData();
                             Movie movie = data.getParcelableExtra("movie");
                             Log.d("MainActivityTag", movie.toString());
+                            movieArrayList.add(movie);
+                            movieAdapter.notifyDataSetChanged();
                         }
                     }
                 });
