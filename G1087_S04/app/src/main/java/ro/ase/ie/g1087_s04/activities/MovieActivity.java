@@ -20,13 +20,16 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
+import androidx.recyclerview.widget.RecyclerView;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.Locale;
 
 import ro.ase.ie.g1087_s04.R;
+import ro.ase.ie.g1087_s04.adapters.MovieAdapter;
 import ro.ase.ie.g1087_s04.model.GenreEnum;
 import ro.ase.ie.g1087_s04.model.Movie;
 import ro.ase.ie.g1087_s04.model.ParentalApprovalEnum;
@@ -48,6 +51,8 @@ public class MovieActivity extends AppCompatActivity
     private SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd", Locale.US);
     private Movie movie;
     private String MovieActivityTag = MovieActivity.class.getName().toString();
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
