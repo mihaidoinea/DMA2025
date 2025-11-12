@@ -106,6 +106,7 @@ public class MovieActivity extends AppCompatActivity {
 
                     Intent intent = new Intent();
                     //set the movie as payload for this intent
+                    intent.putExtra("movie", movie);
                     setResult(RESULT_OK, intent);
                     finish();
                 }

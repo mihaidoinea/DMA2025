@@ -18,12 +18,17 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import java.util.ArrayList;
+
 import ro.ase.ie.g1106_s04.R;
+import ro.ase.ie.g1106_s04.model.Movie;
 
 public class MainActivity extends AppCompatActivity {
 
     private static final int ADD_MOVIE = 100;
     private ActivityResultLauncher<Intent> launcher;
+    private final ArrayList<Movie> movieList = new ArrayList<>();
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,7 +45,12 @@ public class MainActivity extends AppCompatActivity {
                 new ActivityResultCallback<ActivityResult>() {
                     @Override
                     public void onActivityResult(ActivityResult o) {
-
+                        if(o.getResultCode() == RESULT_OK)
+                        {
+                            Intent data = o.getData();
+                            Movie movie = data.getParcelableExtra("movie");
+                            movieList.add(movie);
+                        }
                     }
                 });
     }
