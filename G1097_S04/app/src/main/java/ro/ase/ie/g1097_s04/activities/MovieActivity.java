@@ -8,6 +8,7 @@ import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.RatingBar;
 import android.widget.SeekBar;
@@ -27,7 +28,9 @@ import java.util.Date;
 import java.util.Locale;
 
 import ro.ase.ie.g1097_s04.R;
+import ro.ase.ie.g1097_s04.models.GenreEnum;
 import ro.ase.ie.g1097_s04.models.Movie;
+import ro.ase.ie.g1097_s04.models.ParentalGuidanceEnum;
 
 public class MovieActivity extends AppCompatActivity
 //    implements View.OnClickListener
@@ -174,8 +177,20 @@ public class MovieActivity extends AppCompatActivity
                 return ValidationResult.error(Field.POSTER, "URL is not a valid address!");
         }
 
+        int checkedRadioButtonId = rgGuidance.getCheckedRadioButtonId();
+        RadioButton rb = findViewById(checkedRadioButtonId);
+        String guidance = rb.getText().toString();
+
         //setters
         movie.setTitle(title);
+        movie.setDuration(duration);
+        movie.setBudget(budget);
+        movie.setRelease(release);
+        movie.setPosterUrl(poster);
+        movie.setWatched(swWatched.isChecked());
+        movie.setGenre(GenreEnum.valueOf(spGenre.getSelectedItem().toString()));
+        movie.setRating(rbRating.getRating());
+        movie.setpGuidance(ParentalGuidanceEnum.valueOf(guidance));
 
         Log.i("MovieActivityTag", movie.toString());
 
