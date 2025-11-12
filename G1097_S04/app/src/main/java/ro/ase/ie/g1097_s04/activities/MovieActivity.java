@@ -92,6 +92,7 @@ public class MovieActivity extends AppCompatActivity
                 if(results.validForm == true) {
                     Intent intent = new Intent();
                     //save movie instance in the intent
+                    intent.putExtra("movie", movie);
                     setResult(RESULT_OK, intent);
                     finish();
                 }
@@ -242,6 +243,4 @@ public class MovieActivity extends AppCompatActivity
         }
 
     }
-
-
 }

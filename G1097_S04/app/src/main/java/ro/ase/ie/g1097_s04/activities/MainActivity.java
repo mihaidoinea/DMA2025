@@ -2,6 +2,7 @@ package ro.ase.ie.g1097_s04.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -18,13 +19,17 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import java.util.ArrayList;
+
 import ro.ase.ie.g1097_s04.R;
+import ro.ase.ie.g1097_s04.models.Movie;
 
 public class MainActivity extends AppCompatActivity {
 
     protected static final int ADD_MOVIE = 100;
     protected static final int UPDATE_MOVIE = 200;
     ActivityResultLauncher<Intent> launcher;
+    final ArrayList<Movie> movies = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,7 +49,10 @@ public class MainActivity extends AppCompatActivity {
                         //handler for the movie returned from MovieActivity
                         if(o.getResultCode() ==RESULT_OK)
                         {
-                            //handle the movie instance
+                            Intent intent = o.getData();
+                            Movie movie = intent.getParcelableExtra("movie");
+                            movies.add(movie);
+                            Log.i("main_activity_tag",movie.toString());
                         }
                         else {
                             Toast.makeText(MainActivity.this,
