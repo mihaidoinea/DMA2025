@@ -18,16 +18,22 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
+import androidx.recyclerview.widget.RecyclerView;
+
+import java.util.ArrayList;
 
 import ro.ase.ie.g1091_s04.R;
+import ro.ase.ie.g1091_s04.adapters.MovieAdapter;
 import ro.ase.ie.g1091_s04.models.Movie;
 
 public class MainActivity extends AppCompatActivity {
 
     protected static final int ADD_MOVIE = 100;
     protected static final int UPDATE_MOVIE = 200;
-
+    private final ArrayList<Movie> movies=new ArrayList<>();
     ActivityResultLauncher<Intent> launcher;
+    private RecyclerView recyclerView;
+    private MovieAdapter movieAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,6 +46,11 @@ public class MainActivity extends AppCompatActivity {
             return insets;
         });
 
+
+        recyclerView=findViewById(R.id.recyclerView);
+        movieAdapter=new MovieAdapter(movies,this);
+        recyclerView.setAdapter(movieAdapter);
+
         launcher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(),
                 new ActivityResultCallback<ActivityResult>() {
                     @Override
@@ -48,6 +59,8 @@ public class MainActivity extends AppCompatActivity {
                             Intent intent=o.getData();
                             Movie movie=intent.getParcelableExtra("movie");
                             Log.d("MainActivityTag",movie.toString());
+                            movies.add(movie);
+                            movieAdapter.notifyDataSetChanged();
                         }
                     }
                 });

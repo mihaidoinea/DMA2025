@@ -19,6 +19,42 @@ public class Movie implements Parcelable {
     private Boolean watched; //Switch
     private String posterUrl;
 
+    public String getTitle() {
+        return title;
+    }
+
+    public Double getBudget() {
+        return budget;
+    }
+
+    public Date getRelease() {
+        return release;
+    }
+
+    public GenreEnum getGenre() {
+        return genre;
+    }
+
+    public Float getRating() {
+        return rating;
+    }
+
+    public Integer getDuration() {
+        return duration;
+    }
+
+    public ParentalGuidanceEnum getpGuidance() {
+        return pGuidance;
+    }
+
+    public Boolean getWatched() {
+        return watched;
+    }
+
+    public String getPosterUrl() {
+        return posterUrl;
+    }
+
     protected Movie(Parcel in) {
         title = in.readString();
         if (in.readByte() == 0) {
