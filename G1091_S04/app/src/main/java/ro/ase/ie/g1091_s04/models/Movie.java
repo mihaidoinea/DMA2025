@@ -39,6 +39,16 @@ public class Movie implements Parcelable {
         byte tmpWatched = in.readByte();
         watched = tmpWatched == 0 ? null : tmpWatched == 1;
         posterUrl = in.readString();
+
+        genre = GenreEnum.valueOf(in.readString());
+        pGuidance = ParentalGuidanceEnum.valueOf(in.readString());
+
+        if(in.readByte() == 0)
+            release = null;
+        else
+        {
+            release = new Date(in.readLong());
+        }
     }
 
     public static final Creator<Movie> CREATOR = new Creator<Movie>() {
@@ -148,5 +158,14 @@ public class Movie implements Parcelable {
         }
         parcel.writeByte((byte) (watched == null ? 0 : watched ? 1 : 2));
         parcel.writeString(posterUrl);
+        parcel.writeString(genre.toString());
+        parcel.writeString(pGuidance.toString());
+
+        if(release == null)
+            parcel.writeByte((byte)0);
+        else {
+            parcel.writeByte((byte)1);
+            parcel.writeLong(release.getTime());
+        }
     }
 }
