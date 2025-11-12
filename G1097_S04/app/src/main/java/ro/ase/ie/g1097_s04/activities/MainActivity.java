@@ -60,6 +60,7 @@ public class MainActivity extends AppCompatActivity {
                             Movie movie = intent.getParcelableExtra("movie");
                             movies.add(movie);
                             Log.i("main_activity_tag",movie.toString());
+                            movieAdapter.notifyDataSetChanged();
                         }
                         else {
                             Toast.makeText(MainActivity.this,
