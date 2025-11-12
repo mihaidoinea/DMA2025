@@ -35,7 +35,11 @@ public class DownloadAsyncTask extends AsyncTask<String, Void, Bitmap> {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-
+        try {
+            Thread.sleep(10000);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
         return bitmap;
     }
 

@@ -29,7 +29,8 @@ public class DownloadRunnableTask implements Runnable{
             urlConnection.connect();
             InputStream inputStream = urlConnection.getInputStream();
             final Bitmap bitmap = BitmapFactory.decodeStream(inputStream);
-//            imageView.setImageBitmap(bitmap); --not possible
+//            imageView.setImageBitmap(bitmap); //--not possible
+
             imageView.post(new Runnable() {
                 @Override
                 public void run() {

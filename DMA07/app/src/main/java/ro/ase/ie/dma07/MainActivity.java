@@ -73,6 +73,7 @@ public class MainActivity extends AppCompatActivity {
         btnCallable = findViewById(R.id.btnCallable);
         btnRunnable = findViewById(R.id.btnRunnable);
         btnThread = findViewById(R.id.btnThreads);
+
         btnGetJson = findViewById(R.id.btGetRecipe);
 
         btnGetJson.setOnClickListener(new View.OnClickListener() {
@@ -103,7 +104,6 @@ public class MainActivity extends AppCompatActivity {
                 thread.start();
             }
         });
-
 
         btnAsync.setOnClickListener(new View.OnClickListener() {
             @Override
