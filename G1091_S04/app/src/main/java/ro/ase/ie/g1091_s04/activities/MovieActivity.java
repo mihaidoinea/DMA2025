@@ -79,6 +79,7 @@ public class MovieActivity extends AppCompatActivity
 
                 if(result.isValid) {
                     Intent intent = new Intent();
+                    intent.putExtra("movie", movie);
                     //place the movie instance inside the Bundle
                     setResult(RESULT_OK, intent);
                     finish();
@@ -164,7 +165,7 @@ public class MovieActivity extends AppCompatActivity
 
         int checkedRadioButtonId = rgGuidance.getCheckedRadioButtonId();
         RadioButton rb = findViewById(checkedRadioButtonId);
-        String guidance = rb.toString();
+        String guidance = rb.getText().toString();
 
         movie.setTitle(title);
         movie.setBudget(budget);
