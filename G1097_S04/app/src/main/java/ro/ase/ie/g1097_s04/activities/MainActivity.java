@@ -18,10 +18,12 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
+import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 
 import ro.ase.ie.g1097_s04.R;
+import ro.ase.ie.g1097_s04.adapters.MovieAdapter;
 import ro.ase.ie.g1097_s04.models.Movie;
 
 public class MainActivity extends AppCompatActivity {
@@ -30,6 +32,8 @@ public class MainActivity extends AppCompatActivity {
     protected static final int UPDATE_MOVIE = 200;
     ActivityResultLauncher<Intent> launcher;
     final ArrayList<Movie> movies = new ArrayList<>();
+    private RecyclerView recyclerView;
+    private MovieAdapter movieAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,7 +45,10 @@ public class MainActivity extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+        movieAdapter = new MovieAdapter(movies,this);
+        recyclerView = findViewById(R.id.recyclerView);
 
+        recyclerView.setAdapter(movieAdapter);
         launcher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(),
                 new ActivityResultCallback<ActivityResult>() {
                     @Override
