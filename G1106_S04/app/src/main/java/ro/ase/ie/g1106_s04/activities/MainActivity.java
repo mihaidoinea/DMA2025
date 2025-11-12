@@ -21,6 +21,7 @@ import androidx.core.view.WindowInsetsCompat;
 import java.util.ArrayList;
 
 import ro.ase.ie.g1106_s04.R;
+import ro.ase.ie.g1106_s04.adapters.MovieAdapter;
 import ro.ase.ie.g1106_s04.model.Movie;
 
 public class MainActivity extends AppCompatActivity {
@@ -28,7 +29,7 @@ public class MainActivity extends AppCompatActivity {
     private static final int ADD_MOVIE = 100;
     private ActivityResultLauncher<Intent> launcher;
     private final ArrayList<Movie> movieList = new ArrayList<>();
-
+    private MovieAdapter movieAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,7 +41,7 @@ public class MainActivity extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
-
+        movieAdapter=new MovieAdapter(this,movieList);
         launcher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(),
                 new ActivityResultCallback<ActivityResult>() {
                     @Override

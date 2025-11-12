@@ -165,4 +165,40 @@ public class Movie implements Parcelable {
             parcel.writeLong(release.getTime());
         }
     }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public Double getBudget() {
+        return budget;
+    }
+
+    public Date getRelease() {
+        return release;
+    }
+
+    public Integer getDuration() {
+        return duration;
+    }
+
+    public GenreEnum getGenre() {
+        return genre;
+    }
+
+    public ParentalGuidanceEnum getpGuidance() {
+        return pGuidance;
+    }
+
+    public Float getRating() {
+        return rating;
+    }
+
+    public Boolean getWatched() {
+        return watched;
+    }
+
+    public String getPosterUrl() {
+        return posterUrl;
+    }
 }
