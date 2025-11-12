@@ -16,18 +16,18 @@ import ro.ase.ie.g1106_s04.model.Movie;
 public class MovieAdapter extends RecyclerView.Adapter<MovieHolder> {
     private Context context;
     private ArrayList<Movie> movieArrayList;
+
+    public MovieAdapter(Context context, ArrayList<Movie> movieArrayList) {
+        this.context = context;
+        this.movieArrayList = movieArrayList;
+    }
+
     @NonNull
     @Override
     public MovieHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater layoutInflater = LayoutInflater.from(context) ;
         View itemView = layoutInflater.inflate(R.layout.movie_item, parent, false);
-
         return new MovieHolder(itemView);
-    }
-
-    public MovieAdapter(Context context, ArrayList<Movie> movieArrayList) {
-        this.context = context;
-        this.movieArrayList = movieArrayList;
     }
 
     @Override
@@ -41,6 +41,6 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieHolder> {
 
     @Override
     public int getItemCount() {
-        return 0;
+        return movieArrayList.size();
     }
 }

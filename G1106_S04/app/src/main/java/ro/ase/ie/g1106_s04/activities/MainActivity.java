@@ -2,6 +2,7 @@ package ro.ase.ie.g1106_s04.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -17,6 +18,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
+import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 
@@ -30,6 +32,7 @@ public class MainActivity extends AppCompatActivity {
     private ActivityResultLauncher<Intent> launcher;
     private final ArrayList<Movie> movieList = new ArrayList<>();
     private MovieAdapter movieAdapter;
+    private RecyclerView recyclerView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,6 +45,9 @@ public class MainActivity extends AppCompatActivity {
             return insets;
         });
         movieAdapter=new MovieAdapter(this,movieList);
+        recyclerView = findViewById(R.id.recyclerView);
+        recyclerView.setAdapter(movieAdapter);
+
         launcher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(),
                 new ActivityResultCallback<ActivityResult>() {
                     @Override
@@ -51,6 +57,8 @@ public class MainActivity extends AppCompatActivity {
                             Intent data = o.getData();
                             Movie movie = data.getParcelableExtra("movie");
                             movieList.add(movie);
+                            Log.d("MainActivityTag", movie.toString());
+                            movieAdapter.notifyDataSetChanged();
                         }
                     }
                 });
