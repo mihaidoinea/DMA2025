@@ -1,6 +1,6 @@
 package ro.ase.ie.g1107_s04.model;
 
-public enum EnumParentalApproval {
+public enum ParentalGuidanceEnum {
     G,
     PG,
     PG13,

@@ -25,8 +25,8 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 import ro.ase.ie.g1107_s04.R;
-import ro.ase.ie.g1107_s04.model.EnumGenre;
-import ro.ase.ie.g1107_s04.model.EnumParentalApproval;
+import ro.ase.ie.g1107_s04.model.GenreEnum;
+import ro.ase.ie.g1107_s04.model.ParentalGuidanceEnum;
 import ro.ase.ie.g1107_s04.model.Movie;
 
 public class MovieActivity extends AppCompatActivity {
@@ -81,14 +81,22 @@ public class MovieActivity extends AppCompatActivity {
             public void onClick(View view) {
                 movie.setTitle(etTitle.getText().toString());
 
-                ValidationResult res = validateAndBuildMovie();
-                if (!res.ok) {
+                ValidationResult result = validateAndBuildMovie();
+                if(result.ok == true) {
+
+                    Intent intent = new Intent();
+                    //set the movie as payload for this intent
+                    intent.putExtra("movie", movie);
+                    setResult(RESULT_OK, intent);
+                    finish();
+                }
+                if (!result.ok) {
                     // show first error inline (and you can accumulate more)
-                    if (res.field == Field.TITLE) etTitle.setError(res.message);
-                    else if (res.field == Field.RELEASE) etRelease.setError(res.message);
-                    else if (res.field == Field.BUDGET) etBudget.setError(res.message);
-                    else if (res.field == Field.POSTER) etPosterURL.setError(res.message);
-                    Toast.makeText(MovieActivity.this, res.message, Toast.LENGTH_SHORT).show();
+                    if (result.field == Field.TITLE) etTitle.setError(result.message);
+                    else if (result.field == Field.BUDGET) etBudget.setError(result.message);
+                    else if (result.field == Field.RELEASE) etRelease.setError(result.message);
+                    else if (result.field == Field.POSTER) etPosterURL.setError(result.message);
+                    Toast.makeText(MovieActivity.this, result.message, Toast.LENGTH_SHORT).show();
                     return;
                 }
             }
@@ -113,15 +121,6 @@ public class MovieActivity extends AppCompatActivity {
         if (title.isEmpty())
             return ValidationResult.error(Field.TITLE, "Movie title is required.");
 
-        String releaseStr = etRelease.getText().toString().trim();
-        Date release = null;
-        if (!releaseStr.isEmpty()) {
-            try { release = df.parse(releaseStr); }
-            catch (ParseException e) { return ValidationResult.error(Field.RELEASE, "Use date format yyyy-MM-dd."); }
-        }
-        else
-            return ValidationResult.error(Field.RELEASE, "Release date is mandatory.");
-
         String budgetStr = etBudget.getText().toString().trim();
         double budget = 0;
         if (!budgetStr.isEmpty()) {
@@ -134,6 +133,15 @@ public class MovieActivity extends AppCompatActivity {
         }
         else
             return ValidationResult.error(Field.BUDGET, "Movie budget is required.");
+
+        String releaseStr = etRelease.getText().toString().trim();
+        Date release = null;
+        if (!releaseStr.isEmpty()) {
+            try { release = df.parse(releaseStr); }
+            catch (ParseException e) { return ValidationResult.error(Field.RELEASE, "Use date format yyyy-MM-dd."); }
+        }
+        else
+            return ValidationResult.error(Field.RELEASE, "Release date is mandatory.");
 
         String genre = String.valueOf(spGenre.getSelectedItem());
         int duration = sbDuration.getProgress(); // minutes
@@ -160,11 +168,11 @@ public class MovieActivity extends AppCompatActivity {
         movie.setRelease(release);
         movie.setBudget(budget);
         movie.setPosterUrl(poster.isEmpty() ? null : poster);
-        movie.setGenre(EnumGenre.valueOf(genre));
+        movie.setGenre(GenreEnum.valueOf(genre));
         movie.setDuration(duration);
         movie.setRating(rating);
-        movie.setRecommended(watched);
-        movie.setpApproval(EnumParentalApproval.valueOf(guidance));
+        movie.setWatched(watched);
+        movie.setpGuidance(ParentalGuidanceEnum.valueOf(guidance));
 
         Log.i(MOVIE_ACTIVITY_TAG, movie.toString());
         return ValidationResult.ok();

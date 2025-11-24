@@ -2,6 +2,7 @@ package ro.ase.ie.g1107_s04.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -17,30 +18,44 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
+import androidx.recyclerview.widget.RecyclerView;
+
+import java.util.ArrayList;
 
 import ro.ase.ie.g1107_s04.R;
+import ro.ase.ie.g1107_s04.adapters.MovieAdapter;
+import ro.ase.ie.g1107_s04.model.Movie;
 
 public class MainActivity extends AppCompatActivity {
 
     private static final int ADD_MOVIE = 100;
-    ActivityResultLauncher<Intent> launcher;
+    private ActivityResultLauncher<Intent> launcher;
+    private final ArrayList<Movie> movieList = new ArrayList<>();
+    private MovieAdapter movieAdapter;
+    private RecyclerView recyclerView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        EdgeToEdge.enable(this);
         setContentView(R.layout.activity_main);
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
-            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
-            return insets;
-        });
+
+        movieAdapter=new MovieAdapter(this,movieList);
+        recyclerView = findViewById(R.id.recyclerView);
+        recyclerView.setAdapter(movieAdapter);
 
         launcher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(),
                 new ActivityResultCallback<ActivityResult>() {
                     @Override
                     public void onActivityResult(ActivityResult o) {
                         //process the movie addition or update
+                        if(o.getResultCode() == RESULT_OK)
+                        {
+                            Intent data = o.getData();
+                            Movie movie = data.getParcelableExtra("movie");
+                            movieList.add(movie);
+                            Log.d("MainActivityTag", movie.toString());
+                            movieAdapter.notifyDataSetChanged();
+                        }
                     }
                 });
     }
