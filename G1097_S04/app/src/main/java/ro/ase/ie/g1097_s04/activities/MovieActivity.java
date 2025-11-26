@@ -212,10 +212,34 @@ public class MovieActivity extends AppCompatActivity
             btnMovieAction.setText("Update Movie");
             //update the movie received with the Intent object
             //get movie from intent
+            movie = intent.getParcelableExtra("movie");
+            prefillForm(movie);
+
         }
         else {
             setResult(RESULT_CANCELED);
             finish();
+        }
+    }
+
+    private void prefillForm(Movie movie) {
+        etTitle.setText(movie.getTitle());
+        etRelease.setText(sdf.format(movie.getRelease()));
+        spGenre.setSelection(movie.getGenre().ordinal());
+        sbDuration.setProgress(movie.getDuration());
+        swWatched.setChecked(movie.getWatched());
+        etBudget.setText(movie.getBudget().toString());
+        etPoster.setText(movie.getPosterUrl());
+        rbRating.setRating(movie.getRating());
+        for(int i=0;i<rgGuidance.getChildCount();i++)
+        {
+            View childAt= rgGuidance.getChildAt(i);
+
+            if(((RadioButton)childAt).getText().toString().equalsIgnoreCase(movie.getpGuidance().toString()))
+            {
+                RadioButton rb=(RadioButton)childAt;
+                rb.setChecked(true);
+            }
         }
     }
 
