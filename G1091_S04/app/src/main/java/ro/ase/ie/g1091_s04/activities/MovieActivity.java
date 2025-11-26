@@ -207,10 +207,33 @@ public class MovieActivity extends AppCompatActivity
             //update existing movie
             //get the existing movie from Intent
             //fill in the controls with movie data
+            movie=intent.getParcelableExtra("movie");
+
+            etTitle.setActivated(false);
+            etRelease.setActivated(false);
+            completeForm(movie);
         }
         else {
             finish();
         }
+    }
+
+    private void completeForm(Movie movie) {
+        etTitle.setText(movie.getTitle());
+        etBudget.setText(movie.getBudget().toString());
+        etRelease.setText(sdf.format(movie.getRelease()));
+        spGenre.setSelection(movie.getGenre().ordinal());
+        sbDuration.setProgress(movie.getDuration());
+        rbRating.setRating(movie.getRating());
+        etPoster.setText(movie.getPosterUrl());
+        swWatched.setChecked(movie.getWatched());
+        for(int i=0;i<rgGuidance.getChildCount();i++){
+            RadioButton rb=(RadioButton)rgGuidance.getChildAt(i);
+            if(rb.getText().toString().equalsIgnoreCase(movie.getpGuidance().toString())){
+                rb.setChecked(true);
+            }
+        }
+
     }
 
     private enum Field {TITLE, BUDGET, DURATION, RELEASE, POSTER, GENERIC};
