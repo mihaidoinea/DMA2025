@@ -26,9 +26,10 @@ import ro.ase.ie.g1107_s04.R;
 import ro.ase.ie.g1107_s04.adapters.MovieAdapter;
 import ro.ase.ie.g1107_s04.model.Movie;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements MovieItemClickListener {
 
     private static final int ADD_MOVIE = 100;
+    private static final int UPDATE_MOVIE = 200;
     private ActivityResultLauncher<Intent> launcher;
     private final ArrayList<Movie> movieList = new ArrayList<>();
     private MovieAdapter movieAdapter;
@@ -52,7 +53,11 @@ public class MainActivity extends AppCompatActivity {
                         {
                             Intent data = o.getData();
                             Movie movie = data.getParcelableExtra("movie");
-                            movieList.add(movie);
+                            if(!movieList.contains(movie))
+                                movieList.add(movie);
+                            else {
+                                movieList.set(movieList.indexOf(movie) ,movie);
+                            }
                             Log.d("MainActivityTag", movie.toString());
                             movieAdapter.notifyDataSetChanged();
                         }
@@ -82,5 +87,14 @@ public class MainActivity extends AppCompatActivity {
         MenuInflater menuInflater = getMenuInflater();
         menuInflater.inflate(R.menu.main_activity_menu, menu);
         return true;
+    }
+
+    @Override
+    public void onMovieClick(int position) {
+        Intent intent = new Intent(MainActivity.this, MovieActivity.class);
+        intent.putExtra("operation_code", UPDATE_MOVIE);
+        Movie editMovie = movieList.get(position);
+        intent.putExtra("movie", editMovie);
+        launcher.launch(intent);
     }
 }

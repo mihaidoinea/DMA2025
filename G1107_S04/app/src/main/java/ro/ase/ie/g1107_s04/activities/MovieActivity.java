@@ -68,10 +68,30 @@ public class MovieActivity extends AppCompatActivity {
             btnMovieAction.setText(btnMessage);
             if(operationCode == 100)
                 movie = new Movie();
-            else {
-                //get the movie from the intent
+            else if (operationCode == 200){
+                movie=intent.getParcelableExtra("movie");
+               preFillForm(movie);
             }
         }
+    }
+
+    private void preFillForm(Movie movie) {
+
+        etTitle.setText(movie.getTitle());
+        spGenre.setSelection(movie.getGenre().ordinal());
+        etRelease.setText(df.format(movie.getRelease()));
+        etPosterURL.setText(movie.getPosterUrl());
+        etBudget.setText(movie.getBudget().toString());
+        rbRating.setRating(movie.getRating());
+        sbDuration.setProgress(movie.getDuration());
+        swWatched.setChecked(movie.getWatched());
+        for(var i=0;i<rgGuidance.getChildCount();i++) {
+            RadioButton rb =  (RadioButton) rgGuidance.getChildAt(i);
+            if (rb.getText().toString().equalsIgnoreCase(movie.getpGuidance().toString())) {
+                rb.setChecked(true);
+            }
+        }
+
     }
 
     private void initializeEvents() {

@@ -9,6 +9,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import java.util.ArrayList;
 import ro.ase.ie.g1107_s04.R;
+import ro.ase.ie.g1107_s04.activities.MainActivity;
 import ro.ase.ie.g1107_s04.model.Movie;
 
 public class MovieAdapter extends RecyclerView.Adapter<MovieHolder> {
@@ -34,6 +35,13 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieHolder> {
         holder.movieTitle.setText(movie.getTitle());
         holder.movieRating.setRating(movie.getRating());
         holder.movieRelease.setText(movie.getRelease().toString());
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                MainActivity activity = (MainActivity) context;
+                activity.onMovieClick(holder.getBindingAdapterPosition());
+            }
+        });
     }
 
     @Override
