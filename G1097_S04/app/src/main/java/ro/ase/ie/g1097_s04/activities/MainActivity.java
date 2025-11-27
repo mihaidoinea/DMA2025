@@ -54,13 +54,22 @@ public class MainActivity extends AppCompatActivity implements IMovieEventListen
                     @Override
                     public void onActivityResult(ActivityResult o) {
                         //handler for the movie returned from MovieActivity
+
                         if(o.getResultCode() ==RESULT_OK)
                         {
                             Intent intent = o.getData();
                             Movie movie = intent.getParcelableExtra("movie");
+                            if(!movies.contains(movie))
+
                             movies.add(movie);
+                            else{
+                                int i = movies.indexOf(movie);
+                                movies.set(i,movie);
+                            }
+
                             Log.i("main_activity_tag",movie.toString());
                             movieAdapter.notifyDataSetChanged();
+
                         }
                         else {
                             Toast.makeText(MainActivity.this,

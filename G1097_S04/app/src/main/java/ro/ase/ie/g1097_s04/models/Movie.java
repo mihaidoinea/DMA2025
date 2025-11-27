@@ -7,6 +7,7 @@ import androidx.annotation.NonNull;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.Objects;
 
 public class Movie implements Parcelable {
     private String title; //EditText (PlainText)
@@ -166,6 +167,18 @@ public class Movie implements Parcelable {
             parcel.writeByte((byte)1);
             parcel.writeLong(release.getTime());
         }
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (!(o instanceof Movie)) return false;
+        Movie movie = (Movie) o;
+        return Objects.equals(getTitle(), movie.getTitle()) && Objects.equals(getRelease(), movie.getRelease());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getTitle(), getRelease());
     }
 
     public String getTitle() {

@@ -213,6 +213,8 @@ public class MovieActivity extends AppCompatActivity
             //update the movie received with the Intent object
             //get movie from intent
             movie = intent.getParcelableExtra("movie");
+//            etTitle.setActivated(false);
+//            etRelease.setActivated(false);
             prefillForm(movie);
 
         }
