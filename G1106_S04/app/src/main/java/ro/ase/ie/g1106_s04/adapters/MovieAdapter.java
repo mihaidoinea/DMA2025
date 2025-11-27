@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.ArrayList;
 
 import ro.ase.ie.g1106_s04.R;
+import ro.ase.ie.g1106_s04.activities.IMovieEventListener;
 import ro.ase.ie.g1106_s04.model.Movie;
 
 public class MovieAdapter extends RecyclerView.Adapter<MovieHolder> {
@@ -36,7 +37,13 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieHolder> {
         holder.movieTitle.setText(movie.getTitle());
         holder.movieRating.setRating(movie.getRating());
         holder.movieRelease.setText(movie.getRelease().toString());
-
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                IMovieEventListener listener = (IMovieEventListener)context;
+                listener.onMovieClick(holder.getBindingAdapterPosition());
+            }
+        });
     }
 
     @Override

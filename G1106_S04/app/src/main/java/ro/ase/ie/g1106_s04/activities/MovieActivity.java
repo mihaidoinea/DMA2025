@@ -76,10 +76,31 @@ public class MovieActivity extends AppCompatActivity {
         {
             //update an existing movie
             btnMovieAction.setText("Update Movie");
+
+            movie = intent.getParcelableExtra("movie");
+            completeForm(movie);
         }
         else {
             finish();
         }
+    }
+
+    private void completeForm(Movie movie) {
+        etTitle.setText(movie.getTitle());
+        etBudget.setText(movie.getBudget().toString());
+        etRelease.setText(sdf.format(movie.getRelease()));
+        etPoster.setText(movie.getPosterUrl());
+        spGenre.setSelection(movie.getGenre().ordinal());
+        swWatched.setChecked(movie.getWatched());
+        sbDuration.setProgress(movie.getDuration());
+        rbRating.setRating(movie.getRating());
+        for(int i=0; i < rgGuidance.getChildCount(); i++){
+            RadioButton childAt = (RadioButton) rgGuidance.getChildAt(i);
+            if (childAt.getText().toString().equalsIgnoreCase(movie.getpGuidance().toString())){
+                childAt.setChecked(true);
+            }
+        }
+
     }
 
     private void initializeControls() {
