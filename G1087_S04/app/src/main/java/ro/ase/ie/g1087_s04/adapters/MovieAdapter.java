@@ -12,6 +12,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 import ro.ase.ie.g1087_s04.R;
+import ro.ase.ie.g1087_s04.activities.MainActivity;
 import ro.ase.ie.g1087_s04.model.Movie;
 
 public class MovieAdapter extends RecyclerView.Adapter<MovieHolder> {
@@ -38,7 +39,24 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieHolder> {
         holder.movieTitle.setText(movie.getTitle() + "(" + movie.getGenre() + ")");
         holder.movieRating.setRating(movie.getRating());
         holder.movieRelease.setText(new SimpleDateFormat().format(movie.getRelease()));
+
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                int position = holder.getBindingAdapterPosition();
+                ((MainActivity)context).onMovieCLick(position);
+            }
+        });
+
+        holder.movieDelete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                int position = holder.getBindingAdapterPosition();
+                ((MainActivity)context).onMovieDelete(position);
+            }
+        });
     }
+
 
     @Override
     public int getItemCount() {

@@ -2,6 +2,7 @@ package ro.ase.ie.g1087_s04.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.util.Log;
 import android.util.Patterns;
 import android.view.View;
@@ -80,7 +81,34 @@ public class MovieActivity extends AppCompatActivity
         {
             //update existing movie
             btnMovieAction.setText("Update Movie");
+            movie = intent.getParcelableExtra("movie");
+            prefillForm(movie);
+
         }
+    }
+
+    private void prefillForm(Movie movie1) {
+       etTitle.setText(movie1.getTitle());
+       etRelease.setText(df.format(movie1.getRelease()));
+       etBudget.setText(movie1.getBudget().toString());
+       spGenre.setSelection(movie1.getGenre().ordinal());
+       etPosterUrl.setText(movie1.getPosterUrl());
+       swWatched.setChecked(movie1.getWatched());
+       sbDuration.setProgress(movie1.getDuration());
+       rbRating.setRating(movie1.getRating());
+
+
+        ParentalApprovalEnum app = movie1.getpApproval();
+
+        for(int i=0;i<rgGuidance.getChildCount();i++)
+        {
+            RadioButton radiobut = (RadioButton) rgGuidance.getChildAt(i);
+            if(radiobut.getText().toString().equalsIgnoreCase(app.toString()))
+            {
+                radiobut.setChecked(true);
+            }
+        }
+
     }
 
     private void initializeControls() {

@@ -4,6 +4,7 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 
 import java.util.Date;
 
@@ -202,6 +203,15 @@ public class Movie implements Parcelable {
 
     public String getPosterUrl() {
         return posterUrl;
+    }
+
+    @Override
+    public boolean equals(@Nullable Object obj) {
+//        return super.equals(obj);
+        Movie m= (Movie) obj;
+        if(m.getTitle().equals(this.title) && m.getRelease().equals(this.release)){
+            return true;
+        } else return false;
     }
 }
 
