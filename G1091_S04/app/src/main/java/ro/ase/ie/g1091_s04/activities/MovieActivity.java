@@ -209,8 +209,8 @@ public class MovieActivity extends AppCompatActivity
             //fill in the controls with movie data
             movie=intent.getParcelableExtra("movie");
 
-            etTitle.setActivated(false);
-            etRelease.setActivated(false);
+//            etTitle.setActivated(false);
+//            etRelease.setActivated(false);
             completeForm(movie);
         }
         else {

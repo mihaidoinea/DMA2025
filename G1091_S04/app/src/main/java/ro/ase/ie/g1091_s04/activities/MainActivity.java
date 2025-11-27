@@ -106,4 +106,10 @@ public class MainActivity extends AppCompatActivity implements IMovieEventListen
         intent.putExtra("action_code",MainActivity.UPDATE_MOVIE);
         launcher.launch(intent);
     }
+
+    @Override
+    public void onMovieDelete(int position) {
+        movies.remove(position);
+        movieAdapter.notifyDataSetChanged();
+    }
 }

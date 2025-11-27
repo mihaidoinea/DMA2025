@@ -28,6 +28,10 @@ public class MovieHolder extends RecyclerView.ViewHolder {
         moviePoster=itemView.findViewById(R.id.moviePoster);
         movieOptions=itemView.findViewById(R.id.movieOptions);
 
+
+        persist=itemView.findViewById(R.id.rbPersist);
+
+
     }
 
 }
