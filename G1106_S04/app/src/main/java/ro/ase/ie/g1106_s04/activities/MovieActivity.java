@@ -87,8 +87,10 @@ public class MovieActivity extends AppCompatActivity {
 
     private void completeForm(Movie movie) {
         etTitle.setText(movie.getTitle());
+        etTitle.setEnabled(false);
         etBudget.setText(movie.getBudget().toString());
         etRelease.setText(sdf.format(movie.getRelease()));
+        etRelease.setEnabled(false);
         etPoster.setText(movie.getPosterUrl());
         spGenre.setSelection(movie.getGenre().ordinal());
         swWatched.setChecked(movie.getWatched());

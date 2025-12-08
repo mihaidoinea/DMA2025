@@ -4,12 +4,14 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 
+import ro.ase.ie.g1106_s04.Networking.DownloadTask;
 import ro.ase.ie.g1106_s04.R;
 import ro.ase.ie.g1106_s04.activities.IMovieEventListener;
 import ro.ase.ie.g1106_s04.model.Movie;
@@ -42,8 +44,21 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieHolder> {
             public void onClick(View view) {
                 IMovieEventListener listener = (IMovieEventListener)context;
                 listener.onMovieClick(holder.getBindingAdapterPosition());
+
             }
         });
+
+        holder.movieDelete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                IMovieEventListener listener = (IMovieEventListener) context;
+                listener.onMovieDelete(holder.getBindingAdapterPosition());
+            }
+        });
+
+        DownloadTask downloadTask = new DownloadTask(movie.getPosterUrl(),holder.moviePoster);
+        Thread thread = new Thread(downloadTask);
+        thread.start();
     }
 
     @Override
