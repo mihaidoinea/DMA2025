@@ -176,7 +176,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private File getFile()
     {
         return new File(Environment.getExternalStorageDirectory(), "new_file");
-        Environment.D
     }
 
     public void writeFile(View view) {
