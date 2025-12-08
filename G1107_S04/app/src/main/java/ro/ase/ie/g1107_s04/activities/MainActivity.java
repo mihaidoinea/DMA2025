@@ -61,6 +61,7 @@ public class MainActivity extends AppCompatActivity implements MovieItemClickLis
                             Log.d("MainActivityTag", movie.toString());
                             movieAdapter.notifyDataSetChanged();
                         }
+
                     }
                 });
     }

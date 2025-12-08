@@ -73,11 +73,14 @@ public class MovieActivity extends AppCompatActivity {
                preFillForm(movie);
             }
         }
+
     }
 
     private void preFillForm(Movie movie) {
 
         etTitle.setText(movie.getTitle());
+//        etTitle.setEnabled(false);
+//        etRelease.setEnabled(false);
         spGenre.setSelection(movie.getGenre().ordinal());
         etRelease.setText(df.format(movie.getRelease()));
         etPosterURL.setText(movie.getPosterUrl());
@@ -91,7 +94,6 @@ public class MovieActivity extends AppCompatActivity {
                 rb.setChecked(true);
             }
         }
-
     }
 
     private void initializeEvents() {
