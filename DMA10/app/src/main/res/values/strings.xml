@@ -1,0 +1,36 @@
+<resources>
+    <string name="app_name">dma10</string>
+    <!-- Settings Activity Title -->
+    <string name="title_activity_settings">SettingsActivity</string>
+
+    <!-- Preference Titles -->
+    <string name="messages_header">Messages</string>
+    <string name="sync_header">Sync</string>
+
+    <!-- Messages Preferences -->
+    <string name="signature_title">Your signature</string>
+    <string name="reply_title">Default reply action</string>
+
+    <!-- Sync Preferences -->
+    <string name="sync_title">Sync email periodically</string>
+    <string name="attachment_title">Download incoming attachments</string>
+    <string name="attachment_summary_on">Automatically download attachments for incoming emails
+    </string>
+    <string name="attachment_summary_off">Only download attachments when manually requested</string>
+    <string name="write_custom_shared_prefs">Write custom shared prefs</string>
+    <string name="open_shared_prefs_screen">Open shared prefs</string>
+    <string name="read_file">Read File</string>
+    <string name="write_file">Write File</string>
+    <string name="write_activity_shared_prefs">Write Activity Shared Prefs</string>
+    <string name="write_pm_shared_prefs">Write PM Shared Prefs</string>
+
+    <string-array name="reply_entries">
+        <item>Reply</item>
+        <item>Reply to all</item>
+    </string-array>
+
+    <string-array name="reply_values">
+        <item>reply</item>
+        <item>reply_all</item>
+    </string-array>
+</resources>
