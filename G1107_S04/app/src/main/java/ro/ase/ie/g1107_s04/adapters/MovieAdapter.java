@@ -15,6 +15,7 @@ import java.util.Map;
 import ro.ase.ie.g1107_s04.R;
 import ro.ase.ie.g1107_s04.activities.MainActivity;
 import ro.ase.ie.g1107_s04.model.Movie;
+import ro.ase.ie.g1107_s04.networking.DownloadPoster;
 
 public class MovieAdapter extends RecyclerView.Adapter<MovieHolder> {
     private Context context;
@@ -37,9 +38,15 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieHolder> {
     @Override
     public void onBindViewHolder(@NonNull MovieHolder holder, int position) {
         Movie movie=movieArrayList.get(position);
+
+        DownloadPoster downloadPoster = new DownloadPoster(holder.moviePoster, movie.getPosterUrl());
+        Thread thread = new Thread(downloadPoster);
+        thread.start();
+
         holder.movieTitle.setText(movie.getTitle());
         holder.movieRating.setRating(movie.getRating());
         holder.movieRelease.setText(movie.getRelease().toString());
+        holder.movieOptions.setOnCheckedChangeListener(null);
 
         ArrayList<Movie> persistedMovies = options.get(R.id.rbPersist);
         ArrayList<Movie> exportedMovies = options.get(R.id.rbExport);
@@ -50,6 +57,10 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieHolder> {
         else if ( exportedMovies!= null &&  exportedMovies.contains(movie)  )
         {
             holder.movieOptions.check(R.id.rbExport);
+        }
+        else
+        {
+            holder.movieOptions.check(-1);
         }
 
 
