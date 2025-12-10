@@ -22,8 +22,6 @@ public class DownloadTask implements Runnable{
         this.imageView = imageView;
     }
 
-
-
     @Override
     public void run() {
         try {
