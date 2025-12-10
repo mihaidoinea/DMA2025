@@ -29,7 +29,5 @@ public class MovieHolder extends RecyclerView.ViewHolder {
         moviePoster = itemView.findViewById(R.id.moviePoster);
         movieDelete = itemView.findViewById(R.id.movieDelete);
         movieOptions = itemView.findViewById(R.id.movieOptions);
-
     }
-
 }
