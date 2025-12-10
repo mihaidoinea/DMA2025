@@ -15,11 +15,12 @@ import java.util.HashMap;
 import ro.ase.ie.g1097_s04.R;
 import ro.ase.ie.g1097_s04.activities.MainActivity;
 import ro.ase.ie.g1097_s04.models.Movie;
+import ro.ase.ie.g1097_s04.networking.DownloadTask;
 
 public  class MovieAdapter extends RecyclerView.Adapter<MovieHolder> {
     ArrayList<Movie> moviesList;
     Context context;
-    HashMap<Movie,String> options;
+    HashMap<Movie,Integer> options;
 
     public MovieAdapter(ArrayList<Movie> moviesList, Context context) {
         this.moviesList = moviesList;
@@ -39,6 +40,7 @@ public  class MovieAdapter extends RecyclerView.Adapter<MovieHolder> {
     @Override
     public void onBindViewHolder(@NonNull MovieHolder holder, int position) {
         Movie movie=moviesList.get(position);
+        holder.movieOptions.setOnCheckedChangeListener(null);
         holder.movieTitle.setText(movie.getTitle() + " (" + movie.getGenre().toString() + ")");
         holder.movieRelease.setText(movie.getRelease().toString());
         holder.movieRating.setRating(movie.getRating());
@@ -46,15 +48,30 @@ public  class MovieAdapter extends RecyclerView.Adapter<MovieHolder> {
             ((MainActivity)context).onMovieItemClick(holder.getBindingAdapterPosition());
         });
 
+        Integer rbOption = options.get(movie);
+        holder.movieOptions.check(rbOption==null?-1:rbOption);
+
+        holder.movieDelete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ((MainActivity) context).onMovieDelete(holder.getBindingAdapterPosition());
+            }
+        });
+
         holder.movieOptions.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(@NonNull RadioGroup radioGroup, int i) {
                 int value=radioGroup.getCheckedRadioButtonId();
                 if(value==R.id.rbPersist)
-                options.put(movie,"Persist");
-                else options.put(movie,"Export");
+                    options.put(movie,R.id.rbPersist);
+                else
+                    options.put(movie,R.id.rbExport);
             }
         });
+
+        DownloadTask downloadTask = new DownloadTask(movie.getPosterUrl(),holder.moviePoster);
+        Thread thread = new Thread(downloadTask);
+        thread.start();
     }
 
     @Override

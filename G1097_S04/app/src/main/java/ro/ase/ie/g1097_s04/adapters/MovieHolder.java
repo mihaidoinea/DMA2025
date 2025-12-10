@@ -20,7 +20,6 @@ public class MovieHolder extends RecyclerView.ViewHolder {
     protected Button movieDelete;
     protected ImageView moviePoster;
 
-
     public MovieHolder(@NonNull View itemView) {
         super(itemView);
         movieTitle= itemView.findViewById(R.id.movieTitle);
