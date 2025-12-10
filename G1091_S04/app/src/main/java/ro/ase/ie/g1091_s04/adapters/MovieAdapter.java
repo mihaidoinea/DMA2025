@@ -5,23 +5,19 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RadioGroup;
-
 import androidx.annotation.NonNull;
-import androidx.appcompat.view.menu.MenuView;
 import androidx.recyclerview.widget.RecyclerView;
-
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.HashMap;
-
 import ro.ase.ie.g1091_s04.R;
 import ro.ase.ie.g1091_s04.activities.MainActivity;
 import ro.ase.ie.g1091_s04.models.Movie;
+import ro.ase.ie.g1091_s04.networking.DownloadTask;
 
 public class MovieAdapter extends RecyclerView.Adapter<MovieHolder> {
     public ArrayList<Movie> collection;
     public Context context;
-    public HashMap<Movie,Boolean> options;
+    public HashMap<Movie,Integer> options;
 
     public MovieAdapter(ArrayList<Movie> collection, Context context) {
         this.collection = collection;
@@ -40,6 +36,7 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieHolder> {
     @Override
     public void onBindViewHolder(@NonNull MovieHolder holder, int position) {
         Movie movie = collection.get(position);
+        holder.movieOptions.setOnCheckedChangeListener(null);
         holder.movieTitle.setText(movie.getTitle());
         holder.movieRelease.setText(movie.getRelease().toString());
         holder.movieRating.setRating(movie.getRating());
@@ -53,17 +50,23 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieHolder> {
             }
         });
 
+        Integer rbOption = options.get(movie);
+        holder.movieOptions.check(rbOption==null?-1:rbOption);
+
         holder.movieOptions.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(@NonNull RadioGroup radioGroup, int i) {
-
-               /* Boolean option;
-                if(radioGroup.getChildAt(i).toString() == "Export"){
-                    option = false;
-                }
-                options.put(movie, option);*/
+                int value=radioGroup.getCheckedRadioButtonId();
+                if(value==R.id.rbPersist)
+                    options.put(movie,R.id.rbPersist);
+                else
+                    options.put(movie,R.id.rbExport);
             }
         });
+
+        DownloadTask downloadTask = new DownloadTask(movie.getPosterUrl(),holder.moviePoster);
+        Thread thread = new Thread(downloadTask);
+        thread.start();
     }
 
 

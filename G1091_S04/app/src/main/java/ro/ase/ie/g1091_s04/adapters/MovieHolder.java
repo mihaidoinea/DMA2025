@@ -19,6 +19,7 @@ public class MovieHolder extends RecyclerView.ViewHolder {
     protected Button deleteMovie;
     protected ImageView moviePoster;
     protected RadioGroup movieOptions;
+
     public MovieHolder(@NonNull View itemView) {
         super(itemView);
         movieTitle=itemView.findViewById(R.id.movieTitle);
@@ -27,11 +28,6 @@ public class MovieHolder extends RecyclerView.ViewHolder {
         deleteMovie=itemView.findViewById(R.id.movieDelete);
         moviePoster=itemView.findViewById(R.id.moviePoster);
         movieOptions=itemView.findViewById(R.id.movieOptions);
-
-
-        persist=itemView.findViewById(R.id.rbPersist);
-
-
     }
 
 }
