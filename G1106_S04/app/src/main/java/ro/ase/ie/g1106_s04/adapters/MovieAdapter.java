@@ -4,7 +4,6 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.RadioGroup;
 
 import androidx.annotation.NonNull;
@@ -13,7 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import ro.ase.ie.g1106_s04.Networking.DownloadTask;
+import ro.ase.ie.g1106_s04.networking.DownloadTask;
 import ro.ase.ie.g1106_s04.R;
 import ro.ase.ie.g1106_s04.activities.IMovieEventListener;
 import ro.ase.ie.g1106_s04.activities.MainActivity;

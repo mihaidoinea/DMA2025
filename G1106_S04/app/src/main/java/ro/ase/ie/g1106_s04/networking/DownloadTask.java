@@ -1,4 +1,4 @@
-package ro.ase.ie.g1106_s04.Networking;
+package ro.ase.ie.g1106_s04.networking;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -8,7 +8,6 @@ import android.widget.ImageView;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.OutputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
