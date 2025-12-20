@@ -24,6 +24,8 @@ import java.util.ArrayList;
 
 import ro.ase.ie.g1107_s04.R;
 import ro.ase.ie.g1107_s04.adapters.MovieAdapter;
+import ro.ase.ie.g1107_s04.database.DatabaseManager;
+import ro.ase.ie.g1107_s04.database.MovieDao;
 import ro.ase.ie.g1107_s04.model.Movie;
 
 public class MainActivity extends AppCompatActivity implements MovieItemClickListener {
@@ -34,7 +36,8 @@ public class MainActivity extends AppCompatActivity implements MovieItemClickLis
     private final ArrayList<Movie> movieList = new ArrayList<>();
     private MovieAdapter movieAdapter;
     private RecyclerView recyclerView;
-
+    private DatabaseManager databaseManager;
+    private MovieDao movieDao;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -43,6 +46,9 @@ public class MainActivity extends AppCompatActivity implements MovieItemClickLis
         movieAdapter=new MovieAdapter(this,movieList);
         recyclerView = findViewById(R.id.recyclerView);
         recyclerView.setAdapter(movieAdapter);
+        databaseManager=DatabaseManager.getDatabaseInstance(getApplicationContext());
+        movieDao=databaseManager.getMovieDao();
+
 
         launcher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(),
                 new ActivityResultCallback<ActivityResult>() {
@@ -53,8 +59,11 @@ public class MainActivity extends AppCompatActivity implements MovieItemClickLis
                         {
                             Intent data = o.getData();
                             Movie movie = data.getParcelableExtra("movie");
-                            if(!movieList.contains(movie))
+                            Long rowIndex = movieDao.insertMovie(movie);
+                            Log.d("MainActivityTag", "Index: "+ rowIndex);
+                            if(!movieList.contains(movie)){
                                 movieList.add(movie);
+                                }
                             else {
                                 movieList.set(movieList.indexOf(movie) ,movie);
                             }
@@ -64,6 +73,8 @@ public class MainActivity extends AppCompatActivity implements MovieItemClickLis
 
                     }
                 });
+
+
     }
 
     @Override
