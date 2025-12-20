@@ -2,22 +2,40 @@ package ro.ase.ie.g1091_s04.models;
 
 import android.os.Parcel;
 import android.os.Parcelable;
-
 import androidx.annotation.NonNull;
-
-import java.io.Serializable;
+import androidx.room.ColumnInfo;
+import androidx.room.Entity;
+import androidx.room.Ignore;
+import androidx.room.Index;
+import androidx.room.TypeConverters;
 import java.util.Date;
 import java.util.Objects;
+import ro.ase.ie.g1091_s04.database.DateConverter;
 
+@Entity(tableName = "movieTable",
+        primaryKeys = {"movieTitle", "release"},
+        indices = {@Index("movieTitle"),@Index("release")})
 public class Movie implements Parcelable {
+    @NonNull
+    @ColumnInfo(name = "movieTitle")
     private String title; //EditText (PlainText)
+    @ColumnInfo
     private Double budget; //EditText (Numeric)
+    @NonNull
+    @ColumnInfo
+    @TypeConverters(DateConverter.class)
     private Date release; //EditText (Date)
+    @ColumnInfo
     private GenreEnum genre; //Spinner
+    @ColumnInfo
     private Float rating; //RatingBar
+    @ColumnInfo
     private Integer duration; //SeekBar
+    @Ignore
     private ParentalGuidanceEnum pGuidance; //RadioButton with RadioGroup
+    @ColumnInfo
     private Boolean watched; //Switch
+    @ColumnInfo
     private String posterUrl;
 
     public String getTitle() {

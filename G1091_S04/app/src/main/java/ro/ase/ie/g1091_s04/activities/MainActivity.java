@@ -24,6 +24,8 @@ import java.util.ArrayList;
 
 import ro.ase.ie.g1091_s04.R;
 import ro.ase.ie.g1091_s04.adapters.MovieAdapter;
+import ro.ase.ie.g1091_s04.database.DatabaseManager;
+import ro.ase.ie.g1091_s04.database.MovieDao;
 import ro.ase.ie.g1091_s04.models.Movie;
 
 public class MainActivity extends AppCompatActivity implements IMovieEventListener{
@@ -34,7 +36,8 @@ public class MainActivity extends AppCompatActivity implements IMovieEventListen
     ActivityResultLauncher<Intent> launcher;
     private RecyclerView recyclerView;
     private MovieAdapter movieAdapter;
-
+    private DatabaseManager dbManager;
+    private MovieDao movieTable;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -50,7 +53,8 @@ public class MainActivity extends AppCompatActivity implements IMovieEventListen
         recyclerView=findViewById(R.id.recyclerView);
         movieAdapter=new MovieAdapter(movies,this);
         recyclerView.setAdapter(movieAdapter);
-
+        dbManager = DatabaseManager.getInstance(getApplicationContext());
+        movieTable = dbManager.getMovieDao();
         launcher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(),
                 new ActivityResultCallback<ActivityResult>() {
                     @Override
@@ -66,6 +70,7 @@ public class MainActivity extends AppCompatActivity implements IMovieEventListen
                                 int i = movies.indexOf(movie);
                                 movies.set(i, movie);
                             }
+                            movieTable.insertMovie(movie);
                             movieAdapter.notifyDataSetChanged();
                         }
                     }
@@ -109,6 +114,7 @@ public class MainActivity extends AppCompatActivity implements IMovieEventListen
 
     @Override
     public void onMovieDelete(int position) {
+        movieTable.deleteMovie(movies.get(position));
         movies.remove(position);
         movieAdapter.notifyDataSetChanged();
     }
