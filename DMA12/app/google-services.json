@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "433304571572",
+    "project_id": "dma2025-89af3",
+    "storage_bucket": "dma2025-89af3.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:433304571572:android:74bd79bdc2630a3d7951e1",
+        "android_client_info": {
+          "package_name": "ro.ase.ie.dma12"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCJz6O2ioOfG2SkUmx1l6qoef2jIx5Cq-k"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
