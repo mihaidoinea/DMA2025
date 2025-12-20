@@ -8,7 +8,7 @@ import androidx.room.RoomDatabase;
 
 import ro.ase.ie.g1087_s04.model.Movie;
 
-@Database(entities = {Movie.class},version = 1)
+@Database(entities = {Movie.class},version = 1, exportSchema = false)
 public abstract class DatabaseManager extends RoomDatabase{
     static final String DatabaseName="movieDB";
     static volatile DatabaseManager databaseInstance=null;
@@ -28,7 +28,5 @@ public abstract class DatabaseManager extends RoomDatabase{
 
     }
 
-
-
-
+    public abstract MovieDao getMovieDao();
 }

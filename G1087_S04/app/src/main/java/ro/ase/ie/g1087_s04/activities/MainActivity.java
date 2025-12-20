@@ -26,6 +26,7 @@ import java.util.ArrayList;
 import ro.ase.ie.g1087_s04.R;
 import ro.ase.ie.g1087_s04.adapters.MovieAdapter;
 import ro.ase.ie.g1087_s04.database.DatabaseManager;
+import ro.ase.ie.g1087_s04.database.MovieDao;
 import ro.ase.ie.g1087_s04.model.Movie;
 
 public class MainActivity extends AppCompatActivity implements IMovieClickListener {
@@ -38,7 +39,7 @@ public class MainActivity extends AppCompatActivity implements IMovieClickListen
     private RecyclerView recyclerView;
     private ArrayList<Movie> movieArrayList;
     private MovieAdapter movieAdapter;
-
+    private MovieDao movieTable;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -55,6 +56,7 @@ public class MainActivity extends AppCompatActivity implements IMovieClickListen
         recyclerView = findViewById(R.id.recyclerView);
         recyclerView.setAdapter(movieAdapter);
         databaseManager=DatabaseManager.getInstance(getApplicationContext());
+        movieTable = databaseManager.getMovieDao();
 
         launcher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(),
                 new ActivityResultCallback<ActivityResult>() {
@@ -71,6 +73,7 @@ public class MainActivity extends AppCompatActivity implements IMovieClickListen
                             } else {
                                 movieArrayList.add(movie);
                             }
+                            movieTable.insertMovie(movie);
                             movieAdapter.notifyDataSetChanged();
                         }
                     }
@@ -116,11 +119,10 @@ public class MainActivity extends AppCompatActivity implements IMovieClickListen
 
     @Override
     public void onMovieDelete(int position) {
+        movieTable.deleteMovie(movieArrayList.get(position));
         movieArrayList.remove(position);
         movieAdapter.notifyItemRemoved(position);
     }
-
-
 }
 
 
