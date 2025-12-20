@@ -5,18 +5,38 @@ import android.os.Parcelable;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.room.ColumnInfo;
+import androidx.room.Entity;
+import androidx.room.Ignore;
+import androidx.room.Index;
+import androidx.room.TypeConverters;
 
 import java.util.Date;
 
+import ro.ase.ie.g1087_s04.database.DateConverter;
+
+@Entity(tableName = "movieTable",
+        primaryKeys = {"title", "release"},
+        indices = {@Index("title"),@Index("release")})
 public class Movie implements Parcelable {
+    @ColumnInfo(name = "movieTitle")
     private String title; //EditText
+    @ColumnInfo
     private Double budget; //EditText
+    @ColumnInfo
+    @TypeConverters(DateConverter.class)
     private Date release; //EditText
+    @ColumnInfo
     private GenreEnum genre; //Spinner
+    @ColumnInfo
     private Integer duration; //SeekBar
+    @Ignore
     private ParentalApprovalEnum pApproval; //RadioButtons
+    @ColumnInfo
     private Float rating; //RatingBar
+    @ColumnInfo
     private Boolean watched; //Switch
+    @ColumnInfo
     private String posterUrl;
 
     //

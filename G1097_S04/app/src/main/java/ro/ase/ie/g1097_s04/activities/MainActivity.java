@@ -24,6 +24,8 @@ import java.util.ArrayList;
 
 import ro.ase.ie.g1097_s04.R;
 import ro.ase.ie.g1097_s04.adapters.MovieAdapter;
+import ro.ase.ie.g1097_s04.database.DatabaseManager;
+import ro.ase.ie.g1097_s04.database.MovieDao;
 import ro.ase.ie.g1097_s04.models.Movie;
 
 public class MainActivity extends AppCompatActivity implements IMovieEventListener{
@@ -34,6 +36,8 @@ public class MainActivity extends AppCompatActivity implements IMovieEventListen
     final ArrayList<Movie> movies = new ArrayList<>();
     private RecyclerView recyclerView;
     private MovieAdapter movieAdapter;
+    private DatabaseManager dbManager;
+    MovieDao movieTable;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,6 +51,8 @@ public class MainActivity extends AppCompatActivity implements IMovieEventListen
         });
         movieAdapter = new MovieAdapter(movies,this);
         recyclerView = findViewById(R.id.recyclerView);
+        dbManager = DatabaseManager.getInstance(getApplicationContext());
+        movieTable = dbManager.getMovieDao();
 
         recyclerView.setAdapter(movieAdapter);
         launcher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(),
@@ -60,13 +66,13 @@ public class MainActivity extends AppCompatActivity implements IMovieEventListen
                             Intent intent = o.getData();
                             Movie movie = intent.getParcelableExtra("movie");
                             if(!movies.contains(movie))
-
-                            movies.add(movie);
+                                movies.add(movie);
                             else{
                                 int i = movies.indexOf(movie);
                                 movies.set(i,movie);
                             }
 
+                            movieTable.insertMovie(movie);
                             Log.i("main_activity_tag",movie.toString());
                             movieAdapter.notifyDataSetChanged();
 
@@ -116,6 +122,7 @@ public class MainActivity extends AppCompatActivity implements IMovieEventListen
 
     @Override
     public void onMovieDelete(int position) {
+        movieTable.deleteMovie(movies.get(position));
         movies.remove(position);
         movieAdapter.notifyDataSetChanged();
     }

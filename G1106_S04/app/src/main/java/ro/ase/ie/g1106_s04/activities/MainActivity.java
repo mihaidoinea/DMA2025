@@ -23,6 +23,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.ArrayList;
 import ro.ase.ie.g1106_s04.R;
 import ro.ase.ie.g1106_s04.adapters.MovieAdapter;
+import ro.ase.ie.g1106_s04.database.DatabaseManager;
+import ro.ase.ie.g1106_s04.database.MovieDAO;
 import ro.ase.ie.g1106_s04.model.Movie;
 
 public class MainActivity extends AppCompatActivity implements IMovieEventListener{
@@ -47,13 +49,15 @@ public class MainActivity extends AppCompatActivity implements IMovieEventListen
         movieAdapter=new MovieAdapter(this,movieList);
         recyclerView = findViewById(R.id.recyclerView);
         recyclerView.setAdapter(movieAdapter);
-
+        DatabaseManager databaseManager = DatabaseManager.getInstance(getApplicationContext());
+        MovieDAO movieDAO = databaseManager.getMovieDao();
         launcher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(),
                 new ActivityResultCallback<ActivityResult>() {
                     @Override
                     public void onActivityResult(ActivityResult o) {
                         if(o.getResultCode() == RESULT_OK)
                         {
+
                             Intent data = o.getData();
                             Movie movie = data.getParcelableExtra("movie");
                             if(!movieList.contains(movie)){
@@ -63,7 +67,7 @@ public class MainActivity extends AppCompatActivity implements IMovieEventListen
                                 int position=movieList.indexOf(movie);
                                 movieList.set(position, movie);
                             }
-
+                            movieDAO.insertMovie(movie);
                             Log.d("MainActivityTag", movie.toString());
                             movieAdapter.notifyDataSetChanged();
                         }

@@ -26,4 +26,5 @@ public abstract class DatabaseManager extends RoomDatabase{
         }
         return databaseInstance;
     }
+    public abstract MovieDAO getMovieDao();
 }
