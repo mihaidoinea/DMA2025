@@ -1,8 +1,6 @@
 package ro.ase.ie.g1106_s04.database;
 
 import androidx.room.TypeConverter;
-import androidx.room.TypeConverters;
-
 import java.util.Date;
 
 public class DateTimeConverter {

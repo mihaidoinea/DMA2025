@@ -3,17 +3,17 @@ package ro.ase.ie.g1106_s04.database;
 import androidx.room.Dao;
 import androidx.room.Delete;
 import androidx.room.Insert;
+import androidx.room.OnConflictStrategy;
 
 import ro.ase.ie.g1106_s04.model.Movie;
 
-@Dao()
-
+@Dao
 public interface MovieDAO {
-    @Insert
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     long insertMovie(Movie movie);
 
     @Delete
-    void deleteMovie(Movie movie);
+    int deleteMovie(Movie movie);
 
 
 

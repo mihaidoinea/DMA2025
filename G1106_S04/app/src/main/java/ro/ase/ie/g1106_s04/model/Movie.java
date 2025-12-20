@@ -17,15 +17,17 @@ import java.util.Objects;
 import ro.ase.ie.g1106_s04.database.DateTimeConverter;
 
 @Entity(tableName = "MovieTable",
-        primaryKeys = {"release", "title"},
-        indices = {@Index("release"),@Index("title")}
+        primaryKeys = {"release", "movieTitle"},
+        indices = {@Index("release"),@Index("movieTitle")}
 )
 
 public class Movie implements Parcelable {
+    @NonNull
     @ColumnInfo(name = "movieTitle")
     private String title; //EditText (PlainText)
     @ColumnInfo
     private Double budget; //EditText (Number)
+    @NonNull
     @ColumnInfo
     @TypeConverters(DateTimeConverter.class)
     private Date release; //EditText (Date)

@@ -35,6 +35,8 @@ public class MainActivity extends AppCompatActivity implements IMovieEventListen
     private final ArrayList<Movie> movieList = new ArrayList<>();
     private MovieAdapter movieAdapter;
     private RecyclerView recyclerView;
+    private DatabaseManager databaseManager;
+    private MovieDAO movieTable;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,8 +51,8 @@ public class MainActivity extends AppCompatActivity implements IMovieEventListen
         movieAdapter=new MovieAdapter(this,movieList);
         recyclerView = findViewById(R.id.recyclerView);
         recyclerView.setAdapter(movieAdapter);
-        DatabaseManager databaseManager = DatabaseManager.getInstance(getApplicationContext());
-        MovieDAO movieDAO = databaseManager.getMovieDao();
+        databaseManager = DatabaseManager.getInstance(getApplicationContext());
+        movieTable = databaseManager.getMovieDao();
         launcher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(),
                 new ActivityResultCallback<ActivityResult>() {
                     @Override
@@ -67,7 +69,7 @@ public class MainActivity extends AppCompatActivity implements IMovieEventListen
                                 int position=movieList.indexOf(movie);
                                 movieList.set(position, movie);
                             }
-                            movieDAO.insertMovie(movie);
+                            movieTable.insertMovie(movie);
                             Log.d("MainActivityTag", movie.toString());
                             movieAdapter.notifyDataSetChanged();
                         }
@@ -112,6 +114,7 @@ public class MainActivity extends AppCompatActivity implements IMovieEventListen
 
     @Override
     public void onMovieDelete(int position) {
+        movieTable.deleteMovie(movieList.get(position));
         movieList.remove(position);
         movieAdapter.notifyDataSetChanged();
     }
